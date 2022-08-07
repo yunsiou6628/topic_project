@@ -1,0 +1,31 @@
+// 商品
+// routes 路徑
+
+import express from 'express'
+import content from '../middleware/content.js'
+import * as auth from '../middleware/auth.js'
+import admin from '../middleware/admin.js'
+import upload from '../middleware/upload.js'
+import {
+  createProduct,
+  getProducts,
+  getAllProducts,
+  getProduct,
+  editProduct
+} from '../controllers/products.js'
+
+const router = express.Router()
+
+// 新增商品 upload 要放在 createProduct 之前，要有 createProduct 才會去下一個 middleware
+// content => 判斷型態 ('multipart/form-data')=> 想判斷的型態(也可能是JSON)
+router.post('/', content('multipart/form-data'), auth.jwt, admin, upload, createProduct)
+// 抓取 只顯示已上架商品
+router.get('/', getProducts)
+// 抓取 顯示所有(包含下架)商品，只有管理員可以看
+router.get('/all', auth.jwt, admin, getAllProducts)
+// 抓取 單個 :id
+router.get('/:id', getProduct)
+// 更新
+router.patch('/:id', content('multipart/form-data'), auth.jwt, admin, upload, editProduct)
+
+export default router
