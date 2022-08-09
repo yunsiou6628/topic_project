@@ -11,7 +11,13 @@
       :rows="products"
       :columns="columns"
       row-key="name"
-    />
+    >
+    <template #body-cell-edit="Data"><q-td>{{Data.row}}<q-btn>編輯</q-btn></q-td></template>
+    <!-- Template Slot (插槽) https://book.vue.tw/CH2/2-4-slots.html -->
+    <!-- https://quasar.dev/vue-components/table#qtable-api -->
+    <!-- Body slots <q-td>在裡面再新增一個按鈕</q-td> -->
+    <!-- QTable API - body-cell-[name] Slot to define how a specific column cell looks like; replace '[name]' with column name (from columns definition object) -->
+    </q-table>
   </div>
   <!-- 02 -->
   <q-markup-table>
@@ -47,7 +53,7 @@ import { apiAuth } from '../boot/axios'
 
 const columns = [
   {
-    name: 'number',
+    name: 'name',
     required: true,
     label: '商品名稱',
     align: 'left',
@@ -57,7 +63,7 @@ const columns = [
   },
   // 要去對到資料順序
   {
-    name: 'number',
+    name: 'price',
     required: true,
     label: '金額',
     align: 'left',
@@ -66,7 +72,7 @@ const columns = [
     sortable: true
   },
   {
-    name: 'number',
+    name: 'product_date',
     required: true,
     label: '行程日期',
     align: 'left',
@@ -75,7 +81,7 @@ const columns = [
     sortable: true
   },
   {
-    name: 'number',
+    name: 'name',
     required: true,
     label: '剩餘名額',
     align: 'left',
@@ -93,7 +99,7 @@ const columns = [
     sortable: true
   },
   {
-    name: 'number',
+    name: 'edit',
     required: true,
     label: '編輯修改',
     align: 'left',

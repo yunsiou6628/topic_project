@@ -13,15 +13,15 @@ const schema = new mongoose.Schema({
     required: [true, '價格未填寫']
   },
   product_date: {
-    type: Number
-    // 為啥 AdminProduct 會顯示 String ???
+    type: Date
+    // AdminProduct 會顯示 String
     // required: [true, '行程日期未填寫']
   },
   // 縣市區域
   region: {
     type: String
   },
-  // 庫存
+  // 商品庫存
   reserve: {
     type: String
     // required: [true, '商品庫存未填寫']
@@ -30,7 +30,7 @@ const schema = new mongoose.Schema({
   bulletin: {
     type: String
   },
-  // 說明
+  // 商品描述.說明
   description: {
     type: String
   },
@@ -42,6 +42,12 @@ const schema = new mongoose.Schema({
     type: Boolean,
     default: false
     // 預設不上架
+  },
+  // 用行程小分類去抓取到資料
+  sub: {
+    type: mongoose.ObjectId,
+    // required: [true, '行程小分類'],
+    ref: 'products_category'
   }
 }, { versionKey: false }) // 移除 versionKey、__V
 

@@ -12,14 +12,16 @@ export const createProduct = async (req, res) => {
     const result = await products.create({
       name: req.body.name,
       price: req.body.price,
-      product_date: req.body.product_date,
+      product_date: new Date(req.body.product_date),
+      // 把原本 req.body.product_date 改成 new Date(req.body.product_date)
       region: req.body.region,
       reserve: req.body.reserve,
       bulletin: req.body.bulletin,
       description: req.body.description,
       // 使用 ?. 可選串聯，設定圖片沒有上傳可能會沒圖片，若沒有上傳圖片 req.file 會是 undefine，對 undefine 的東西寫 .path 會出現錯誤，使用 ?. 可選串聯 就算沒有連到 req.file?.path 整個就是 undefine，如果是 undefine 就是空的 ''
       image: req.file?.path || '',
-      sell: req.body.sell
+      sell: req.body.sell,
+      sub: req.body.sub
     })
     // res.狀態(保持程式碼一致)
     res.status(200).send({ success: true, message: '', result })
@@ -77,7 +79,8 @@ export const editProduct = async (req, res) => {
       bulletin: req.body.bulletin,
       description: req.body.description,
       image: req.file?.path || '',
-      sell: req.body.sell
+      sell: req.body.sell,
+      sub: req.body.sub
     }
     if (req.file) data.image = req.file.path
     const result = await products.findByIdAndUpdate(req.params.id, data, { new: true })
@@ -90,5 +93,14 @@ export const editProduct = async (req, res) => {
     } else {
       res.status(500).send({ success: false, message: '伺服器錯誤' })
     }
+  }
+}
+
+export const deleteProduct = async (req, res) => {
+  try {
+    await products.findByIdAndDelete(req.params.id)
+    res.status(200).send({ success: true, message: '' })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
 }

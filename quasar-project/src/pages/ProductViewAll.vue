@@ -5,11 +5,10 @@
 
     <!-- 商品顯示 => 把 init() 從後台抓取到的資料放入 products 後，對 products 跑回圈，前台商品頁就會顯示跑過的每一筆資料(全部商品) -->
     <div class="row" >
-      <div class="col-3" v-for='product in products' :key='product._id'>
-      <h1>1</h1>
+      <div class="col-3 " v-for='product in products' :key='product._id'>
         <!-- ProductCard => components 的 ProductCard.vue (=> 重複 code 寫成一個元件) -->
         <!-- :product='product' => 把 products 陣列裡面的 'product' 商品物件資料，放到 components 裡面 ProductCard.vue 相對應位置 :product 中 -->
-        <ProductCard :product='product'/>
+        <ProductCard :product='product' />
       </div>
     </div>
   </div>

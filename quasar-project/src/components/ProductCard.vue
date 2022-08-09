@@ -4,12 +4,12 @@
 <template>
   <router-link :to="'/product/' + product._id">
   <!-- router-link = a 標籤 -->
-    <q-card class="my-card q-pa-xl q-ma-md">
+    <q-card class="my-card q-pa-md q-ma-md column">
       <q-img :src="product.image" />
       <!-- :src="product.image" => : 為了後面可以接 變數 -->
-      <q-h1>{{ product.name }}</q-h1>
-      <!-- <q-h2>{{ product.region }}</q-h2> -->
-      <q-p>{{ product.description }}</q-p>
+      <div class="q-pa-xs text-h6">{{ product.name }}</div>
+      <div class="q-pa-xs text-subtitle2">{{ product.region }}</div>
+      <div class="q-pa-xs text-caption">{{ product.description }}</div>
 
     </q-card>
   </router-link>

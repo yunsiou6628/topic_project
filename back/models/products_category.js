@@ -3,16 +3,21 @@
 import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
-  name: {
+  // 行程大分類
+  category: {
     type: String,
-    required: [true, '行程大分類']
+    required: [true, '大分類']
   },
+  // 行程小分類
   sub: {
-    type: [String],
-    required: [true, '行程小分類'],
+    type: [{
+      name: String
+    }],
+    required: [true, '小分類'],
     default: []
-    // 預設
   }
+
+  // 分類管理先寫出來(用小分類去分類)，後台寫好controllers products，前台用axios去抓取到後台分類資料顯示，把後台資料放入前台 options，先寫好增加修改刪除，再來寫分類
 
 }, { versionKey: false }) // 移除 versionKey、__V
 

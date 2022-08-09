@@ -143,6 +143,16 @@ const routes = [
           admin: true
         }
       },
+      // 管理員 - 商品分類
+      {
+        path: 'AdminCategory',
+        component: () => import('pages/AdminCategory.vue'),
+        meta: {
+          title: '登山行程網站 | 管理員-商品分類',
+          login: true,
+          admin: true
+        }
+      },
       // 管理員 - 訂單管理
       {
         path: 'AdminOrderView',
