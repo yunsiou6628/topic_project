@@ -71,6 +71,7 @@ export const createCategory = async (req, res) => {
 // 顯示所有(包含下架)商品，只有管理員可以看
 export const getAllCategorys = async (req, res) => {
   try {
+    // console.log('here')
     const result = await productsCategory.find()
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {

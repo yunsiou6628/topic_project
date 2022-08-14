@@ -10,15 +10,11 @@
       <div class="q-pa-xs text-h6">{{ product.name }}</div>
       <div class="q-pa-xs text-subtitle2">{{ product.region }}</div>
       <div class="q-pa-xs text-caption">{{ product.description }}</div>
-
     </q-card>
   </router-link>
 </template>
 
 <script setup>
-// import { useUserStore } from '@/stores/user'
-// const user = useUserStore()
-// const { addCart } = user
+// 把外面的值傳入 defineProps 定義傳入資料的變數名稱相同 ProductCard :product='product'=> product.name 、 product.region...
 defineProps(['product'])
-
 </script>

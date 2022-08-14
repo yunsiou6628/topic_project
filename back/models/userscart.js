@@ -31,7 +31,7 @@ const schema = new mongoose.Schema({
     unique: true,
     // 驗證
     validator: {
-      validator (email) {
+      validator(email) {
         return validator.isEmail(email)
       },
       message: '信箱格式錯誤'
@@ -98,13 +98,13 @@ const schema = new mongoose.Schema({
         // 使用者購買商品
         product: {
           type: mongoose.ObjectId,
-          ref: 'products',
-          required: [true, '商品欄位未填寫']
+          ref: 'products'
+          // required: [true, '商品欄位未填寫']
         },
         // 使用者購買數量
         quantity: {
-          type: Number,
-          required: [true, '數量欄位未填寫']
+          type: Number
+          // required: [true, '數量欄位未填寫']
         }
       }
     ]

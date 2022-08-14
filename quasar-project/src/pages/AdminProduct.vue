@@ -48,6 +48,12 @@
             {{new Date(product_date.row.product_date).toLocaleDateString()}}
             </q-td>
         </template>
+
+        <template #body-cell-sub="data">
+          <q-td>
+            {{ data.row.category.name }} > {{ data.row.sub.name }}
+          </q-td>
+        </template>
         <!-- Template Slot (插槽) https://book.vue.tw/CH2/2-4-slots.html => Slot 方式加入按鈕 -->
         <!-- https://quasar.dev/vue-components/table#qtable-api -->
         <!-- Body slots <q-td>在裡面再新增一個按鈕</q-td> -->
@@ -66,15 +72,49 @@
                 <div class="col-12">
                   <q-input v-model='form.name' label='名稱' :rules='[rules.required]'></q-input>
                 </div>
-                <div class="col-12">
-                    {{typeof(form.product_date)}}
-                  <q-input v-model='form.product_date' stack-label label='行程日期' :rules='[rules.required]' filled type="date" hint="Native date"></q-input>
+
+                <!-- 必須物件型態 {} https://quasar.dev/vue-components/date#with-qinput -->
+                <!-- 用分類 + - 去寫 日期多筆資料 -->
+                <div class="col-6">
+                    <!-- {{typeof(form.product_date)}} -->
+                  <q-input v-model="form.product_date.from" stack-label label='行程出發日期' :rules="['date']">
+                    <!-- <template v-slot:append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-date v-model="form.product_date" range>
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template> -->
+                  </q-input>
                 </div>
+                <div class="col-6">
+                  <q-input v-model="form.product_date.to" stack-label label='行程結束日期' :rules="['date']">
+                  <template v-slot:append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-date v-model="form.product_date" range>
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
+                </div>
+
                 <div class="col-12">
                   <q-input v-model='form.region' label='縣市區域' :rules='[rules.required]'></q-input>
                 </div>
                 <div class="col-12">
-                  <q-select :options='options' v-model='form.sub' label='分類'></q-select>
+                  <q-select :options='options' emit-value map-options v-model='form.category' label='大分類' @update:model-value="form.sub = ''"></q-select>
+                </div>
+                <div class="col-12">
+                  <q-select :options='suboptions' emit-value map-options v-model='form.sub' label='小分類'></q-select>
                 </div>
                 <div class="col-12">
                   <q-input type='number' v-model.number='form.price' label='價格' :rules='[rules.required, rules.price]'></q-input>
@@ -96,10 +136,9 @@
                 </div>
               </div>
           <q-card-actions>
-            <q-spacer>
-              <q-btn type='submit' color='primary' v-close-popup>確定</q-btn>
-              <q-btn color='primary' @click='form.dialog = false' v-close-popup>取消</q-btn>
-            </q-spacer>
+            <q-space />
+            <q-btn type='submit' color='primary' v-close-popup>確定</q-btn>
+            <q-btn color='primary' @click='form.dialog = false' v-close-popup>取消</q-btn>
           </q-card-actions>
         </q-form>
       </q-card>
@@ -114,7 +153,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 // reactive 陣列或物件 ref 變數 => vue 用法， 要在 vue 使用要 import 加 { reactive, ref }
 import Swal from 'sweetalert2'
 import { apiAuth } from '../boot/axios'
@@ -122,17 +161,45 @@ import { apiAuth } from '../boot/axios'
 const filter = ref('')
 // 搜尋 filter : String | Object => 搜尋抓資料 https://quasar.dev/vue-components/table#qtable-api
 
-// 把後台資料放入 options (未修改)
+// 測試
+// const date = ref({
+//   from: '年/月/日',
+//   to: '年/月/日'
+// })
+
+// 把後台資料放入 options
 // const options = ['郊山', '步道', '中級山', '百岳行程']
-// const options = ref('products_category')
+const options = computed(() => {
+  return productscategory.map(category => {
+    return {
+      label: category.category,
+      value: category._id
+    }
+  })
+})
+
+const suboptions = computed(() => {
+  const cidx = productscategory.findIndex(category => category._id === form.category)
+  return cidx > -1 ? productscategory[cidx].sub.map(sub => {
+    return {
+      label: sub.name,
+      value: sub._id
+    }
+  }) : []
+})
+
 const products = reactive([])
+const productscategory = reactive([])
 // ([]) products 丟到空陣列中
 
 const form = reactive({
   // 清空欄位 + 賦予欄位資料型態 (欄位不一定宣告 const 的時候是空的) =>  '' 字串 , 0 數字 , true | false 布林值 , null 物件
   _id: '',
   name: '',
-  product_date: '',
+  product_date: {
+    from: '年/月/日',
+    to: '年/月/日'
+  },
   // quasar date 的 model 型態是 String => https://quasar.dev/vue-components/date#introduction
   // models 的 product_date 型態給他 type: Date
   // 後台 controllers products.js 把原本 req.body.product_date 改成 new Date(req.body.product_date)
@@ -174,14 +241,17 @@ const openDialog = (_id) => {
     form.region = products[idx].region
     form.reserve = products[idx].reserve
     form.price = products[idx].price
-    form.category = products[idx].category
+    form.category = products[idx].category._id
     form.sell = products[idx].sell
-    form.sub = products[idx].sub
+    form.sub = products[idx].sub._id
     form.description = products[idx].description
     form.bulletin = products[idx].bulletin
   } else {
     form.name = ''
-    form.product_date = ''
+    form.product_date = {
+      from: '年/月/日',
+      to: '年/月/日'
+    }
     form.region = ''
     form.reserve = 0
     form.price = 0
@@ -215,7 +285,18 @@ const submitForm = async () => {
     if (form._id.length === 0) {
       // apiAuth 後台路徑
       const { data } = await apiAuth.post('/products', fd)
-      products.push(data.result)
+      const idxs = findCategoryIdx(data.result.sub)
+      products.push({
+        ...data.result,
+        category: {
+          _id: productscategory[idxs.cidx]._id,
+          name: productscategory[idxs.cidx].category
+        },
+        sub: {
+          _id: productscategory[idxs.cidx].sub[idxs.sidx]._id,
+          name: productscategory[idxs.cidx].sub[idxs.sidx].name
+        }
+      })
       Swal.fire({
         icon: 'success',
         title: '成功',
@@ -223,7 +304,19 @@ const submitForm = async () => {
       })
     } else {
       const { data } = await apiAuth.patch('/products/' + form._id, fd)
-      products[form.idx] = data.result
+      const idxs = findCategoryIdx(data.result.sub)
+      // 顯示方式 (輸入大分類，顯示不同小分類)
+      products[form.idx] = {
+        ...data.result,
+        category: {
+          _id: productscategory[idxs.cidx]._id,
+          name: productscategory[idxs.cidx].category
+        },
+        sub: {
+          _id: productscategory[idxs.cidx].sub[idxs.sidx]._id,
+          name: productscategory[idxs.cidx].sub[idxs.sidx].name
+        }
+      }
       Swal.fire({
         icon: 'success',
         title: '成功',
@@ -352,7 +445,8 @@ const deleteproduct = async (productid) => {
       title: '刪除成功'
     })
     // 在成功的地方再呼叫一次 function
-    init()
+    const idx = products.findIndex(product => product._id === productid)
+    products.splice(idx, 1)
   } catch (error) {
     Swal.fire({
       icon: 'error',
@@ -362,13 +456,41 @@ const deleteproduct = async (productid) => {
   }
 }
 
+const findCategoryIdx = (subid) => {
+  let sidx = -1
+  const cidx = productscategory.findIndex(cat => {
+    const idx = cat.sub.findIndex(s => s._id === subid)
+    if (idx > -1) {
+      sidx = idx
+      return true
+    } else return false
+  })
+  return { sidx, cidx }
+}
+
+// 先抓取分類->商品
 const init = async () => {
   try {
-    // console.log('111')
+    const { data: categoryData } = await apiAuth.get('/products_category/all')
+    productscategory.splice(0, productscategory.length)
+    // 後台資料存入 productscategory 陣列中
+    productscategory.push(...categoryData.result)
+    console.log(productscategory)
     const { data } = await apiAuth.get('/products/all')
-    // 抓取所有商品變成新的陣列(拷貝)
-    products.splice(0, products.length)
-    products.push(...data.result)
+    products.push(...data.result.map(product => {
+      const idxs = findCategoryIdx(product.sub)
+      console.log(idxs)
+      // 判斷大小分類狀態顯示
+      product.category = {
+        _id: productscategory[idxs.cidx]?._id || '',
+        name: productscategory[idxs.cidx]?.category || '未分類'
+      }
+      product.sub = {
+        _id: productscategory[idxs.cidx]?.sub[idxs.sidx]?._id || '',
+        name: productscategory[idxs.cidx]?.sub[idxs.sidx]?.name || '未分類'
+      }
+      return product
+    }))
   } catch (error) {
     console.log(error)
     Swal.fire({
@@ -379,5 +501,4 @@ const init = async () => {
   }
 }
 init()
-
 </script>

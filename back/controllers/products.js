@@ -46,6 +46,17 @@ export const getProducts = async (req, res) => {
   }
 }
 
+// 抓到已上架商品的小分類sub
+export const getTypeProductssub = async (req, res) => {
+  try {
+    const result = await products.find({ sub: req.body.sub })
+    // console.log(result)
+    res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+}
+
 // 顯示所有(包含下架)商品，只有管理員可以看
 export const getAllProducts = async (req, res) => {
   try {
@@ -78,7 +89,6 @@ export const editProduct = async (req, res) => {
       reserve: req.body.reserve,
       bulletin: req.body.bulletin,
       description: req.body.description,
-      image: req.file?.path || '',
       sell: req.body.sell,
       sub: req.body.sub
     }

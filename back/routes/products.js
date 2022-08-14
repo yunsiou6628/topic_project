@@ -9,6 +9,7 @@ import upload from '../middleware/upload.js'
 import {
   createProduct,
   getProducts,
+  getTypeProductssub,
   getAllProducts,
   getProduct,
   editProduct,
@@ -22,6 +23,8 @@ const router = express.Router()
 router.post('/', content('multipart/form-data'), auth.jwt, admin, upload, createProduct)
 // 抓取 只顯示已上架商品
 router.get('/', getProducts)
+// 抓取 顯示已上架商品的小分類sub
+router.post('/sub', content('application/json'), getTypeProductssub)
 // 抓取 顯示所有(包含下架)商品，只有管理員可以看
 router.get('/all', auth.jwt, admin, getAllProducts)
 // 抓取 單個 :id
