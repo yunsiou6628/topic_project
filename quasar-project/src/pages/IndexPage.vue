@@ -1,5 +1,5 @@
 <template>
-<q-page >
+<q-page id="aaa">
   <div>
     <q-carousel
       animated

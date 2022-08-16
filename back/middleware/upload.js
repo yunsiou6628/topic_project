@@ -12,7 +12,7 @@ cloudinary.config({
 
 const upload = multer({
   storage: new CloudinaryStorage({ cloudinary }),
-  fileFilter(req, file, cb) {
+  fileFilter (req, file, cb) {
     // 如果 file 編碼類型，開頭是圖片
     if (!file.mimetype.startsWith('image')) {
       // 如果不是圖片開頭的話  cb = callback

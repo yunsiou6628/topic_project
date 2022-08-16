@@ -97,6 +97,7 @@ const submit = () => {
   // if (!valid.value) return
   user.addCart({ product: product._id, quantity: quantity.value })
 }
+
 const init = async () => {
   try {
     const { data } = await api.get('/products/' + route.params.id)

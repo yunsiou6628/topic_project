@@ -11,12 +11,45 @@ export const createOrder = async (req, res) => {
     if (!canCheckout) {
       return res.status(400).send({ success: false, message: '包含下架商品' })
     }
-    result = await orders.create({ user: req.user._id, products: req.user.cart })
+    console.log(req.user._id)
+    console.log(req.body)
+    result = await orders.create({
+      // 使用者 ID / 購物車
+      user: req.user._id,
+      products: req.user.cart,
+      // 入山入園表單
+      name: req.body.name,
+      gender: req.body.gender,
+      phone: req.body.phone,
+      email: req.body.email,
+      birthday: req.body.birthday,
+      identification: req.body.identification,
+      emergency_contact: req.body.emergencyContact,
+      emergency_contact_phone: req.body.emergencyContactPhone,
+      // --- 付款表單 ---
+      // 信用卡 / 金融卡付款
+      cardtype: req.body.cardtype,
+      cardnumber: req.body.cardnumber,
+      validitPeriod: req.body.validitPeriod,
+      certification: req.body.certification,
+      cardname: req.body.cardname,
+      cardbirthday: req.body.cardbirthday,
+      cardPhone: req.body.cardPhone,
+      // LINE PAY / 街口支付付款 核對付款資料
+      checkPay: req.body.checkPay,
+      checkName: req.body.checkName,
+      checkAccount: req.body.checkAccount,
+      // ATM 轉帳付款 核對 ATM 轉帳資料
+      atmcheckName: req.body.atmcheckName,
+      atmcheckAccount: req.body.atmcheckAccount,
+      atmcheckDay: req.body.atmcheckDay
+      // model欄位 : 前台名稱
+    })
     req.user.cart = []
     await req.user.save()
     res.status(200).send({ success: true, message: '', result: result._id })
   } catch (error) {
-    res.status(500).send({ success: false, message: '伺服器錯誤' })
+    res.status(500).send({ success: false, message: error })
   }
 }
 

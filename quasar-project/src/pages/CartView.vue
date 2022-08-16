@@ -1,5 +1,5 @@
 <!-- CartView 購物車 -->
-<!-- A區 購物車 -->
+<!-- A區 確認購物車訂單 -->
 <!-- B區 填表單資料(入山入園資料) -->
 <!-- C區 付款資料 -->
 <template>
@@ -7,14 +7,15 @@
     <div class="q-pa-xl">
         <div class="col-12">
           <q-table
-          title="購物車"
+          title="購物車商品"
           :rows="cart"
           :columns="cartcolumns"
           row-key="name"
+          hide-pagination
           >
           <template #body-cell-image="all">
             <q-td :img="img">
-              <img :src="all.row.product.image" style="width:400px">
+              <img :src="all.row.product.image" style="width:200px">
               <!-- <pre>{{all.row.product.image}}</pre> -->
             </q-td>
           </template>
@@ -37,12 +38,18 @@
           </q-table>
         </div>
 
-        <div class="col-12 text-center">
-            <q-p>總金額 {{ totalPrice }}</q-p>
+        <div class="col-12 text-center q-pa-xl">
+          <!-- <div class="col-12 q-py-sm">
+            <q-p class="text-h6">總金額 {{ totalPrice }}</q-p>
+          </div> -->
 
-            <q-td :btn="btn">
+            <!-- btn 跳頁 => <q-btn to="/"/> -->
+            <div class="col-12 q-py-sm">
+                <q-btn color='primary' to="/ConfirmOrder" label="確認"></q-btn>
+            </div>
+            <!-- <q-td :btn="btn">
               <q-btn @click='user.checkout' :disabled='!canCheckout'>結帳</q-btn>
-            </q-td>
+            </q-td> -->
         </div>
     </div>
 
@@ -129,11 +136,11 @@ const totalPrice = computed(() => {
   }, 0)
 })
 
-const canCheckout = computed(() => {
-  return cart.length > 0 && !cart.some(item => {
-    return !item.product.sell
-  })
-})
+// const canCheckout = computed(() => {
+//   return cart.length > 0 && !cart.some(item => {
+//     return !item.product.sell
+//   })
+// })
 
 const init = async () => {
   try {

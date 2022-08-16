@@ -49,6 +49,15 @@
             </q-td>
         </template>
 
+        <!-- 圖片 -->
+        <template #body-cell-image="image">
+          <q-td>
+            <!-- 未抓到圖片 -->
+            {{image.row.image}}
+            <img :src="image" style="width:100px"/>
+          </q-td>
+        </template>
+
         <template #body-cell-sub="data">
           <q-td>
             {{ data.row.category.name }} > {{ data.row.sub.name }}
@@ -161,12 +170,6 @@ import { apiAuth } from '../boot/axios'
 const filter = ref('')
 // 搜尋 filter : String | Object => 搜尋抓資料 https://quasar.dev/vue-components/table#qtable-api
 
-// 測試
-// const date = ref({
-//   from: '年/月/日',
-//   to: '年/月/日'
-// })
-
 // 把後台資料放入 options
 // const options = ['郊山', '步道', '中級山', '百岳行程']
 const options = computed(() => {
@@ -214,9 +217,7 @@ const form = reactive({
   description: '',
   bulletin: '',
   idx: -1,
-  dialog: false,
-  valid: false,
-  submitting: false
+  dialog: false
 })
 const rules = reactive({
   required (v) {
@@ -230,7 +231,7 @@ const rules = reactive({
   }
 })
 
-// 打開表單(新增商品和編輯按鈕 開起的表單form)
+// 清空表單/打開表單(新增商品和編輯按鈕 開起的表單form)
 const openDialog = (_id) => {
   const idx = _id === '' ? -1 : products.findIndex(product => product._id === _id)
   // console.log('開啟表單')
@@ -385,10 +386,8 @@ const columns = [
     name: 'image',
     required: true,
     label: '商品圖片',
-    align: 'left',
-    field: row => row.image,
-    format: val => `${val}`,
-    sortable: true
+    align: 'left'
+    // btn 在 template #body-cell-image 加入
   },
   {
     name: 'description',
@@ -404,7 +403,7 @@ const columns = [
     required: true,
     label: '公告提醒',
     align: 'left',
-    field: row => row.reserve,
+    field: row => row.bulletin,
     format: val => `${val}`,
     sortable: true
   },
@@ -422,7 +421,7 @@ const columns = [
     required: true,
     label: '是否上架',
     align: 'left',
-    field: row => row.sell,
+    field: row => row.sell ? '上架' : '下架',
     format: val => `${val}`,
     sortable: true
   },

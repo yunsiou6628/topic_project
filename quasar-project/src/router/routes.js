@@ -97,6 +97,15 @@ const routes = [
         }
       },
       {
+        path: 'ConfirmOrder',
+        component: () => import('pages/ConfirmOrder.vue'),
+        meta: {
+          title: '登山行程網站 | 確認訂單',
+          login: false,
+          admin: false
+        }
+      },
+      {
         path: 'test/',
         component: () => import('pages/TextPage.vue'),
         meta: {

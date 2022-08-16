@@ -31,13 +31,13 @@ const schema = new mongoose.Schema({
     unique: true,
     // 驗證
     validator: {
-      validator(email) {
+      validator (email) {
         return validator.isEmail(email)
       },
       message: '信箱格式錯誤'
     }
   },
-  // 性別 用 1.男 2.女 3.其他 輸入數字
+  // 性別 用 1.男 2.女
   // gender: {
   //   type: Number
   // required: [true, '性別欄位未勾選']

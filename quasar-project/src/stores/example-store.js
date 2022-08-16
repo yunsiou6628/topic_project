@@ -131,15 +131,29 @@ export const useUserStore = defineStore({
         Swal.fire({
           icon: 'error',
           title: '失敗',
-          text: '更新購物車失敗'
+          text: '加入購物車失敗'
+        })
+        return false
+      }
+    },
+    // 確認訂單
+    async confirmOrder (data) {
+      try {
+        await apiAuth.patch('/users/cart', data)
+        return true
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: '失敗',
+          text: '訂單失敗'
         })
         return false
       }
     },
     // 結帳
-    async checkout () {
+    async checkout (confirmform) {
       try {
-        await apiAuth.post('/orders')
+        await apiAuth.post('/orders', confirmform)
         this.cart = 0
         Swal.fire({
           icon: 'success',
@@ -151,7 +165,7 @@ export const useUserStore = defineStore({
         Swal.fire({
           icon: 'error',
           title: '失敗',
-          text: '結帳失敗'
+          text: error
         })
       }
     },
