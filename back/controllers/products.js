@@ -1,19 +1,24 @@
 // controllers - products.js  => 商品新增/編輯/刪除/查詢
 // controllers 呼叫 models 對 資料庫(mongo DB)做 "新增/編輯/刪除/查詢"的操作
 
-// 影片s 06:28:54
-
+// import { json } from 'express'
 import products from '../models/products.js'
 
-// 新增商品
+// 新增商品 (進資料庫)
 export const createProduct = async (req, res) => {
   try {
     // console.log(req.file)
+    console.log(req.body.product_date)
+    console.log(JSON.parse(req.body.product_date))
     const result = await products.create({
       name: req.body.name,
       price: req.body.price,
-      product_date: new Date(req.body.product_date),
+      // JSON.parse(req.body.product_date) 把字串轉為物件，存進資料庫內
+      product_date: JSON.parse(req.body.product_date),
+      // product_date: new Date(req.body.product_date),
       // 把原本 req.body.product_date 改成 new Date(req.body.product_date)
+      // product_date_start: req.body.product_date_start,
+      // product_date_over: req.body.product_date_over,
       region: req.body.region,
       reserve: req.body.reserve,
       bulletin: req.body.bulletin,
@@ -26,6 +31,7 @@ export const createProduct = async (req, res) => {
     // res.狀態(保持程式碼一致)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
+    console.log(error)
     if (error.name === 'ValidationError') {
       const key = Object.keys(error.errors)[0]
       const message = error.errors[key].message
@@ -84,7 +90,9 @@ export const editProduct = async (req, res) => {
     const data = {
       name: req.body.name,
       price: req.body.price,
-      product_date: req.body.product_date,
+      product_date: JSON.parse(req.body.product_date),
+      // product_date_start: req.body.product_date_start,
+      // product_date_over: req.body.product_date_over,
       region: req.body.region,
       reserve: req.body.reserve,
       bulletin: req.body.bulletin,

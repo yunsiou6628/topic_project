@@ -6,10 +6,10 @@ import validator from 'validator'
 
 // 存使用者 帳號、密碼、信箱、使用者登入的 jwt、購物車
 const schema = new mongoose.Schema({
-  // name: {
-  //   type: String
-  // required: [true, '名字欄位未填寫']
-  // },
+  name: {
+    type: String,
+    required: [true, '名字欄位未填寫']
+  },
   account: {
     type: String,
     // required 必填

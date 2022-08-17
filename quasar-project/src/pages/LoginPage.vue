@@ -63,7 +63,7 @@
                 </div>
 
                 <!-- 名字 -->
-                <!-- <div class="col-5">
+                <div class="col-5">
                   {{registerform.name}}
                 <q-input
                   filled
@@ -73,7 +73,7 @@
                   lazy-rules
                   :rules="rules.name"
                 />
-                </div> -->
+                </div>
 
                 <!-- 性別 -->
                 <!-- https://quasar.dev/vue-components/option-group -->
@@ -225,8 +225,8 @@ const tab = ref('mails')
 const registerform = reactive({
   account: '',
   password: '',
-  email: ''
-  // name: '',
+  email: '',
+  name: ''
   // gender: '',
   // birthday: '',
   // identification: '',

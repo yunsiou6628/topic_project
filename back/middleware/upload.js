@@ -30,7 +30,7 @@ const upload = multer({
 })
 
 export default async (req, res, next) => {
-  console.log('經過upl')
+  // console.log('經過upl')
   upload.single('image')(req, res, async error => {
     if (error instanceof multer.MulterError) {
       let message = '上傳失敗'

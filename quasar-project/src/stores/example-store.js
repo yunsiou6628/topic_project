@@ -44,10 +44,10 @@ export const useUserStore = defineStore({
     async login (form) {
       try {
         const { data } = await api.post('/users/login', form)
-        console.log(data)
+        // console.log(data)
         // data.result.token => console.log 後 result 裡面的資料 傳到 this.token (useUserStore = defineStore裡)
         this.token = data.result.token
-        console.log(this.token.length)
+        // console.log(this.token.length)
         this.account = data.result.account
         this.role = data.result.role
         this.cart = data.result.cart

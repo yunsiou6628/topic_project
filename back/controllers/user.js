@@ -5,6 +5,7 @@ import users from '../models/userscart.js'
 import products from '../models/products.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+// import orders from '../models/orders.js'
 
 // 內容格式驗證
 
@@ -104,6 +105,7 @@ export const extend = async (req, res) => {
 // 取遞資料
 export const getUser = (req, res) => {
   try {
+    console.log(req.user)
     res.status(200).send({
       success: true,
       message: '',
@@ -116,6 +118,16 @@ export const getUser = (req, res) => {
         // role 管理員權限
       }
     })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+}
+
+// 顯示所有會員資料，只有管理員可以看
+export const getAllUser = async (req, res) => {
+  try {
+    const result = await users.find()
+    res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
@@ -201,4 +213,14 @@ export const getCart = async (req, res) => {
   }
 }
 
-// *****增加後台 controllers 資料 *****
+// 刪除使用者
+export const deleteUser = async (req, res) => {
+  try {
+    await users.findByIdAndDelete(req.params.id)
+    // 刪除使用者時訂單所有資料一次一起刪除
+    // await orders.deleteMany({ user: req.params.id })
+    res.status(200).send({ success: true, message: '' })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+}

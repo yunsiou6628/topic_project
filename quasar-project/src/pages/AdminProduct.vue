@@ -45,16 +45,43 @@
         <template #body-cell-product_date="product_date">
           <q-td>
             <!-- 修改顯示資料內容 -->
-            {{new Date(product_date.row.product_date).toLocaleDateString()}}
+            <!-- {{product_date.row}} -->
+            <!-- {{product_date.row.product_date.from}}
+            {{product_date.row.product_date.to}} -->
+            <div>{{new Date(product_date.row.product_date.from).toLocaleDateString()}}</div>
+            <div>{{new Date(product_date.row.product_date.to).toLocaleDateString()}}</div>
             </q-td>
+        </template>
+
+        <!-- 縣市區域 -->
+        <template #body-cell-region="region">
+          <q-td>
+            <!-- class="text-wrapper" 文字過長自動換行 -->
+            <div class="text-wrapper">{{region.row.region}}</div>
+          </q-td>
         </template>
 
         <!-- 圖片 -->
         <template #body-cell-image="image">
           <q-td>
-            <!-- 未抓到圖片 -->
-            {{image.row.image}}
-            <img :src="image" style="width:100px"/>
+            <!-- {{image.row.image}} -->
+            <img :src="image.row.image" style="width:100px"/>
+          </q-td>
+        </template>
+
+        <!-- 商品描述 -->
+        <template #body-cell-description="description">
+          <q-td>
+            <!-- class="text-wrapper" 文字過長自動換行 -->
+            <div class="text-wrapper">{{description.row.description}}</div>
+          </q-td>
+        </template>
+
+        <!-- 公告提醒 -->
+        <template #body-cell-bulletin="bulletin">
+          <q-td>
+            <!-- class="text-wrapper" 文字過長自動換行 -->
+            <div class="text-wrapper">{{bulletin.row.bulletin}}</div>
           </q-td>
         </template>
 
@@ -84,13 +111,14 @@
 
                 <!-- 必須物件型態 {} https://quasar.dev/vue-components/date#with-qinput -->
                 <!-- 用分類 + - 去寫 日期多筆資料 -->
+                <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date -->
                 <div class="col-6">
-                    <!-- {{typeof(form.product_date)}} -->
-                  <q-input v-model="form.product_date.from" stack-label label='行程出發日期' :rules="['date']">
+                    {{form.product_date.from}}
+                  <q-input v-model="form.product_date.from" stack-label label='行程日期' :rules="['date']">
                     <!-- <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="form.product_date" range>
+                          <q-date v-model="form.product.from"  range>
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat />
                             </div>
@@ -101,11 +129,12 @@
                   </q-input>
                 </div>
                 <div class="col-6">
-                  <q-input v-model="form.product_date.to" stack-label label='行程結束日期' :rules="['date']">
+                  {{form.product_date.to}}
+                  <q-input v-model="form.product_date.to" stack-label label='行程日期' :rules="['date']">
                   <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="form.product_date" range>
+                          <q-date v-model="form.product_date"  range>
                             <div class="row items-center justify-end">
                               <q-btn v-close-popup label="Close" color="primary" flat />
                             </div>
@@ -115,6 +144,38 @@
                     </template>
                   </q-input>
                 </div>
+
+                <!-- <div class="col-12"> -->
+                    <!-- {{typeof(form.product_date)}} -->
+                  <!-- <q-input v-model="form.product_date_start" stack-label label='行程出發日期' :rules="['date']">
+                    <template v-slot:append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-date v-model="form.product_date_start">
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
+                </div>
+                <div class="col-12">
+                  <q-input v-model="form.product_date_over" stack-label label='行程結束日期' :rules="['date']">
+                  <template v-slot:append>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                          <q-date v-model="form.product_date_over">
+                            <div class="row items-center justify-end">
+                              <q-btn v-close-popup label="Close" color="primary" flat />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
+                </div> -->
 
                 <div class="col-12">
                   <q-input v-model='form.region' label='縣市區域' :rules='[rules.required]'></q-input>
@@ -200,9 +261,11 @@ const form = reactive({
   _id: '',
   name: '',
   product_date: {
-    from: '年/月/日',
-    to: '年/月/日'
+    from: '',
+    to: ''
   },
+  // product_date_start: '年/月/日',
+  // product_date_over: '年/月/日',
   // quasar date 的 model 型態是 String => https://quasar.dev/vue-components/date#introduction
   // models 的 product_date 型態給他 type: Date
   // 後台 controllers products.js 把原本 req.body.product_date 改成 new Date(req.body.product_date)
@@ -239,6 +302,8 @@ const openDialog = (_id) => {
   if (idx > -1) {
     form.name = products[idx].name
     form.product_date = products[idx].product_date
+    // form.product_date_start = products[idx].product_date_start
+    // form.product_date_over = products[idx].product_date_over
     form.region = products[idx].region
     form.reserve = products[idx].reserve
     form.price = products[idx].price
@@ -248,19 +313,21 @@ const openDialog = (_id) => {
     form.description = products[idx].description
     form.bulletin = products[idx].bulletin
   } else {
-    form.name = ''
+    form.name = '111'
     form.product_date = {
       from: '年/月/日',
       to: '年/月/日'
     }
-    form.region = ''
-    form.reserve = 0
-    form.price = 0
+    // form.product_date_start = '年/月/日'
+    // form.product_date_over = '年/月/日'
+    form.region = '111'
+    form.reserve = 1
+    form.price = 1
     form.category = ''
     form.sell = false
     form.sub = ''
-    form.description = ''
-    form.bulletin = ''
+    form.description = '111'
+    form.bulletin = '111'
   }
   form.image = null
   form.idx = idx
@@ -271,15 +338,21 @@ const openDialog = (_id) => {
 
 // 送出表單 (不執行原本的submit， 點同一個 submit 按鈕，執行新的 function => submitForm)
 const submitForm = async () => {
+  // console.log('這是表單' + form.product_date.to)
   form.submitting = true
 
   // FormData() 用意 => 把輸入資料轉換成後台可以接收的資料型態
   // key = i 的角色，要去跑 舊的 form 表單每一筆資料
   // append 附加資料到 fd 新陣列裡面
+  // formData.append 接的內容 (form[key] 如果不是字串會自動轉換成字串)，因為 product_date 是物件所以用 JSON.stringify 把物件轉成字串 傳到後台 (直接用物件無法傳後台會錯誤)
+  // 到 controllers 裡面的 createProduct 把字串轉為物件 JSON.parse(req.body.product_date)，再存進資料庫內
   const fd = new FormData()
   for (const key in form) {
     if (['_id', 'idx', 'dialog', 'valid', 'submitting'].includes(key)) continue
-    else fd.append(key, form[key])
+    else if (['product_date'].includes(key)) {
+      // console.log('123' + form.product_date.to)
+      fd.append(key, JSON.stringify(form[key]))
+    } else fd.append(key, form[key])
   }
   console.log(fd)
   try {
@@ -343,7 +416,6 @@ const columns = [
     label: '商品名稱',
     align: 'left',
     field: row => row.name,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -351,17 +423,30 @@ const columns = [
     required: true,
     label: '行程日期',
     align: 'left',
-    field: row => row.product_date,
-    format: val => `${val}`,
     sortable: true
   },
+  // {
+  //   name: 'product_date_start',
+  //   required: true,
+  //   label: '行程出發日期',
+  //   align: 'left',
+  //   field: row => row.product_date_start,
+  //   sortable: true
+  // },
+  // {
+  //   name: 'product_date_over',
+  //   required: true,
+  //   label: '行程結束日期',
+  //   align: 'left',
+  //   field: row => row.product_date_over,
+  //   sortable: true
+  // },
   {
     name: 'region',
     required: true,
     label: '縣市區域',
     align: 'left',
-    field: row => row.region,
-    format: val => `${val}`,
+    // field: row => row.region,
     sortable: true
   },
   {
@@ -370,7 +455,6 @@ const columns = [
     label: '分類',
     align: 'left',
     field: row => row.sub,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -379,7 +463,6 @@ const columns = [
     label: '金額',
     align: 'left',
     field: row => row.price,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -394,8 +477,7 @@ const columns = [
     required: true,
     label: '商品描述',
     align: 'left',
-    field: row => row.description,
-    format: val => `${val}`,
+    // field: row => row.description,
     sortable: true
   },
   {
@@ -403,8 +485,7 @@ const columns = [
     required: true,
     label: '公告提醒',
     align: 'left',
-    field: row => row.bulletin,
-    format: val => `${val}`,
+    // field: row => row.bulletin,
     sortable: true
   },
   {
@@ -413,7 +494,6 @@ const columns = [
     label: '商品庫存',
     align: 'left',
     field: row => row.reserve,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -422,7 +502,6 @@ const columns = [
     label: '是否上架',
     align: 'left',
     field: row => row.sell ? '上架' : '下架',
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -430,8 +509,6 @@ const columns = [
     required: true,
     label: '編輯修改',
     align: 'left',
-    // field: row => row.sell,
-    // format: val => `${val}`,
     sortable: true
   }
 ]
@@ -443,7 +520,7 @@ const deleteproduct = async (productid) => {
       icon: 'success',
       title: '刪除成功'
     })
-    // 在成功的地方再呼叫一次 function
+    // 在成功的地方再呼叫一次 function 即時更新刪除結果
     const idx = products.findIndex(product => product._id === productid)
     products.splice(idx, 1)
   } catch (error) {
@@ -490,6 +567,7 @@ const init = async () => {
       }
       return product
     }))
+    console.log(products)
   } catch (error) {
     console.log(error)
     Swal.fire({

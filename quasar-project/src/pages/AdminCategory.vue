@@ -22,8 +22,9 @@
         </div>
 
         <div class="q-pt-md row justify-center">
-          <q-btn type='submit' color='secondary'> 新增分類 </q-btn>
-          <q-btn color='primary' @click='form.dialog = false'>取消</q-btn>
+          <q-btn v-if="form._id === ''" type='submit' color='secondary'> 新增分類 </q-btn>
+          <q-btn v-else type='submit' color='yellow-8'> 編輯確認 </q-btn>
+          <q-btn color='primary' @click=cancel>取消</q-btn>
         </div>
 
       </q-form>
@@ -45,10 +46,21 @@
             </template>
           </q-input>
         </template>
+
+        <template #body-cell-sub="sub">
+          <q-td>
+            <!-- <pre>{{ sub.row.sub}}</pre> -->
+            <!-- <pre>{{ sub.row.sub[0].name }}</pre> -->
+            <div v-for="subname in sub.row.sub" :key="subname">
+            <pre>{{subname.name}}</pre>
+            </div>
+          </q-td>
+        </template>
+
         <!-- 編輯|刪除 -->
         <template #body-cell-edit="edit">
           <q-td>
-            <q-btn @click="opencategory(edit.row._id)">編輯</q-btn>
+            <q-btn @click="editcategory(edit.row._id)">編輯</q-btn>
             <q-btn @click="deletecategory(edit.row._id)">刪除</q-btn>
             </q-td>
         </template>
@@ -68,6 +80,7 @@ const addCategory = reactive([])
 
 // 初始化
 const form = reactive({
+  _id: '',
   category: '',
   sub: [{ name: '' }],
   idx: -1,
@@ -75,21 +88,22 @@ const form = reactive({
   valid: false,
   submitting: false
 })
-// const rules = reactive({
-//   required (v) {
-//     return !!v || '必填'
-//   },
-//   price (v) {
-//     return v > -1 || '必須大於等於 0'
-//   },
-//   size (v) {
-//     return !v || !v.length || (v[0]?.type?.includes('image') && v[0]?.size < 1024 * 1024) || '檔案格式不符'
-//   }
-// })
 
-const opencategory = (_id) => {
+// 取消 => 恢復 form 初始值
+const cancel = () => {
+  form._id = ''
+  form.category = ''
+  form.sub = [{ name: '' }]
+  form.idx = -1
+  form.dialog = false
+  form.valid = false
+  form.submitting = false
+}
+
+const editcategory = (_id) => {
   const idx = _id === '' ? -1 : addCategory.findIndex(addCategory => addCategory._id === _id)
   form._id = _id
+  console.log(form._id)
   if (idx > -1) {
     form.category = addCategory[idx].category
     form.sub = addCategory[idx].sub
@@ -108,39 +122,39 @@ const submitForm = async () => {
   form.submitting = true
   const fd = new FormData()
   for (const key in form) {
-    if (['_id', 'idx', 'dialog', 'valid', 'submitting'].includes(key)) continue
-    // 略過包含 _id', 'idx', 'dialog', 'valid', 'submitting' key 值(傳入後台不會用到的資料)
+    if (['_id', 'idx', 'dialog', 'valid', 'submitting'].includes(key)) continue // 略過包含 _id', 'idx', 'dialog', 'valid', 'submitting' key 值(傳入後台不會用到的資料)
     else fd.append(key, form[key])
   }
   // console.log(fd.sub)
   try {
-    const { data } = await apiAuth.post('/products_category', form)
-    addCategory.push(data.result)
-    Swal.fire({
-      icon: 'success',
-      title: '成功',
-      text: '新增成功'
-    })
-    // form._id.length === 0
-    // if (!Object.keys(form).length === 2) {
-    //   // apiAuth 後台路徑
-    //   const { data } = await apiAuth.post('/products_category', fd)
-    //   addCategory.push(data.result)
-    //   Swal.fire({
-    //     icon: 'success',
-    //     title: '成功',
-    //     text: '新增成功'
-    //   })
-    // } else {
-    //   console.log('11111111')
-    //   const { data } = await apiAuth.patch('/products_category/' + form._id, fd)
-    //   addCategory[form.idx] = data.result
-    //   Swal.fire({
-    //     icon: 'success',
-    //     title: '成功',
-    //     text: '編輯成功'
-    //   })
-    // }
+    // const { data } = await apiAuth.post('/products_category', form)
+    // addCategory.push(data.result)
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: '成功',
+    //   text: '新增成功'
+    // })
+    if (form._id.length === 0) {
+      const { data } = await apiAuth.post('/products_category', form)
+      addCategory.push(data.result)
+      Swal.fire({
+        icon: 'success',
+        title: '成功',
+        text: '新增成功'
+      })
+    } else {
+      const { data } = await apiAuth.patch('/products_category/' + form._id, form)
+      addCategory[form.idx] = data.result
+      Swal.fire({
+        icon: 'success',
+        title: '成功',
+        text: '編輯成功'
+      })
+      cancel()
+      // 編輯成功 呼叫 初始化 function
+      // form._id = ''
+      // _id = '' 用來恢復 新增分類 的按鈕
+    }
     form.dialog = false
   } catch (error) {
     Swal.fire({
@@ -160,7 +174,6 @@ const columns = [
     label: '大分類',
     align: 'left',
     field: row => row.category,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -168,9 +181,7 @@ const columns = [
     required: true,
     label: '小分類',
     align: 'left',
-    field: row => row.sub[0].name,
-    // 目前只顯示一個資料
-    format: val => `${val}`,
+    // field: row => row.sub[0].name,
     sortable: true
   },
   {

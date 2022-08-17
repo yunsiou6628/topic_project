@@ -3,14 +3,29 @@
   <div class="q-pa-md">
     <q-table
       title="會員資料"
-      :rows="rows"
+      :rows="users"
       :columns="columns"
       row-key="name"
-    />
+    >
+      <!-- 刪除 -->
+      <template #body-cell-edit="edit">
+        <q-td>
+          <!-- {{edit.row._id}} -->
+          <q-btn @click="deleteuser(edit.row._id)">刪除</q-btn>
+          </q-td>
+      </template>
+
+    </q-table>
   </div>
 </template>
 
-<script>
+<script setup>
+import { reactive } from 'vue'
+import Swal from 'sweetalert2'
+import { apiAuth } from '../boot/axios'
+
+const users = reactive([])
+
 const columns = [
   {
     name: 'name',
@@ -18,7 +33,6 @@ const columns = [
     label: '姓名',
     align: 'left',
     field: row => row.name,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -27,16 +41,6 @@ const columns = [
     label: '帳號',
     align: 'left',
     field: row => row.account,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'password',
-    required: true,
-    label: '密碼',
-    align: 'left',
-    field: row => row.password,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -45,70 +49,6 @@ const columns = [
     label: 'email',
     align: 'left',
     field: row => row.email,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'gender',
-    required: true,
-    label: '性別',
-    align: 'left',
-    field: row => row.gender,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'birthday',
-    required: true,
-    label: '生日',
-    align: 'left',
-    field: row => row.birthday,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'line_id',
-    required: true,
-    label: 'line_id',
-    align: 'left',
-    field: row => row.line_id,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'phone',
-    required: true,
-    label: '手機',
-    align: 'left',
-    field: row => row.phone,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'identification',
-    required: true,
-    label: '身分證',
-    align: 'left',
-    field: row => row.identification,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'emergency_contact',
-    required: true,
-    label: '緊急聯絡人',
-    align: 'left',
-    field: row => row.emergency_contact,
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'emergency_contact_phone',
-    required: true,
-    label: '緊急聯絡人電話',
-    align: 'left',
-    field: row => row.emergency_contact_phone,
-    format: val => `${val}`,
     sortable: true
   },
   {
@@ -116,34 +56,43 @@ const columns = [
     required: true,
     label: '編輯修改',
     align: 'left',
-    // field: row => row.sell,
-    // format: val => `${val}`,
     sortable: true
   }
 ]
 
-const rows = [
-  {
-    name: 'Frozen Yogurt',
-    account: '',
-    password: '',
-    email: '',
-    gender: 0,
-    birthday: 0,
-    line_id: '',
-    phone: '',
-    identification: '',
-    emergency_contact: '',
-    emergency_contact_phone: 0
-  }
-]
-
-export default {
-  setup () {
-    return {
-      columns,
-      rows
-    }
+const deleteuser = async (userid) => {
+  try {
+    await apiAuth.delete('/users/' + userid)
+    await Swal.fire({
+      icon: 'success',
+      title: '刪除成功'
+    })
+    // 在成功的地方再呼叫一次 function 即時更新刪除結果
+    const idx = users.findIndex(user => user._id === userid)
+    users.splice(idx, 1)
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: '失敗',
+      text: error.isAxiosError ? error.response.data.message : error.message
+    })
   }
 }
+
+// 抓取會員註冊時資料->抓取會員訂單資料
+const init = async () => {
+  try {
+    const { data } = await apiAuth.get('/users/all')
+    users.push(...data.result)
+    console.log(users)
+  } catch (error) {
+    // console.log(error)
+    Swal.fire({
+      icon: 'error',
+      title: '失敗',
+      text: '無法取得使用者資料'
+    })
+  }
+}
+init()
 </script>

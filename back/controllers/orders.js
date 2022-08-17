@@ -11,8 +11,8 @@ export const createOrder = async (req, res) => {
     if (!canCheckout) {
       return res.status(400).send({ success: false, message: '包含下架商品' })
     }
-    console.log(req.user._id)
-    console.log(req.body)
+    // console.log(req.user._id)
+    // console.log(req.body)
     result = await orders.create({
       // 使用者 ID / 購物車
       user: req.user._id,
@@ -49,7 +49,7 @@ export const createOrder = async (req, res) => {
     await req.user.save()
     res.status(200).send({ success: true, message: '', result: result._id })
   } catch (error) {
-    res.status(500).send({ success: false, message: error })
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
 }
 
@@ -66,8 +66,18 @@ export const getAllOrders = async (req, res) => {
   try {
     // .populate('user', 'account')
     // 自動抓 user 欄位對應的 ref 資料，只取 account 欄位
+    // console.log(result)
     const result = await orders.find().populate('products.product').populate('user', 'account')
     res.status(200).send({ success: true, message: '', result })
+  } catch (error) {
+    res.status(500).send({ success: false, message: '伺服器錯誤' })
+  }
+}
+
+export const deleteOrders = async (req, res) => {
+  try {
+    await orders.findByIdAndDelete(req.params.id)
+    res.status(200).send({ success: true, message: '' })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
   }

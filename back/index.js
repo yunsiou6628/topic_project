@@ -16,7 +16,7 @@ const app = express()
 
 // cors 限制前台連到後台的網址，限制 github 跟 localhost 可以傳入
 app.use(cors({
-  origin(origin, callback) {
+  origin (origin, callback) {
     if (origin === undefined || origin.includes('github') || origin.includes('localhost')) {
       callback(null, true)
     } else {

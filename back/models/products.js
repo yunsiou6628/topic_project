@@ -13,6 +13,15 @@ const schema = new mongoose.Schema({
     required: [true, '價格未填寫']
   },
   product_date: {
+    from: Date,
+    to: Date
+  },
+  product_date_start: {
+    type: Date
+    // AdminProduct 會顯示 String
+    // required: [true, '行程日期未填寫']
+  },
+  product_date_over: {
     type: Date
     // AdminProduct 會顯示 String
     // required: [true, '行程日期未填寫']

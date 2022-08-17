@@ -33,6 +33,7 @@
                 <!-- <pre>{{all.rowIndex}}</pre> -->
               </q-td>
             </template>
+
             <template #body-cell-quantity="all">
               <q-td :btn="btn">
                 <!-- (all.rowIndex 購物車內第幾個商品 , all.row.quantity+1 該商品數量) -->
@@ -141,7 +142,7 @@
         :done="step > 3"
       >
         <div class="row justify-center">
-          <q-card class="q-pa-lg" style="width: 40%">
+          <q-card class="q-pa-lg" style="width: 45%">
             <div class="text-h6 ">商品明細 :</div>
             <div v-for="(cart,idx) in cart" :key="idx">
             <pre>行程名稱 : {{cart.product.name }}</pre>
