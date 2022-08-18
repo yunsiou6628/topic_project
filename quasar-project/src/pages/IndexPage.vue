@@ -125,6 +125,15 @@
       </div>
     </div>
 
+    <!-- footer -->
+    <div style="position: relative;">
+      <div class="col-12">
+        <img src="https://i.imgur.com/xAienKS.png"
+          style="width: 100%; vertical-align:middle; z-index: 1; position: absolute;">
+      </div>
+      <!-- <div class="col-12 teal-10" style="height: 200px; background: #9097A6; z-index: 2; position: absolute; top:-5%;">
+      </div> -->
+    </div>
   </q-page>
 </template>
 
