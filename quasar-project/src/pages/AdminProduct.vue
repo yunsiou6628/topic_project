@@ -5,24 +5,18 @@
   <!------------ 表單 ------------>
   <div class="q-pa-xl">
     <div class="text-h5 text-center">商品管理</div>
-      <div class="col-12">
-        <q-btn color='secondary' @click="openDialog('')"> 新增商品 </q-btn>
-      </div>
+    <div class="col-12">
+      <q-btn color='secondary' @click="openDialog('')"> 新增商品 </q-btn>
+    </div>
 
-      <!-- <q-input v-model="search" filled type="search" hint="Search">
+    <!-- <q-input v-model="search" filled type="search" hint="Search">
         <template v-slot:append>
           <q-icon name="search" />
         </template>
       </q-input> -->
 
-      <div class="col-12">
-        <q-table
-        title="商品資料"
-        :rows="products"
-        :columns="columns"
-        row-key="name"
-        :filter="filter"
-        >
+    <div class="col-12">
+      <q-table title="商品資料" :rows="products" :columns="columns" row-key="name" :filter="filter">
 
         <!-- 搜尋 search -->
         <template v-slot:top-right>
@@ -39,7 +33,7 @@
             <!-- {{edit}} -->
             <q-btn @click="openDialog(edit.row._id)">編輯</q-btn>
             <q-btn @click="deleteproduct(edit.row._id)">刪除</q-btn>
-            </q-td>
+          </q-td>
         </template>
 
         <template #body-cell-product_date="product_date">
@@ -48,16 +42,16 @@
             <!-- {{product_date.row}} -->
             <!-- {{product_date.row.product_date.from}}
             {{product_date.row.product_date.to}} -->
-            <div>{{new Date(product_date.row.product_date.from).toLocaleDateString()}}</div>
-            <div>{{new Date(product_date.row.product_date.to).toLocaleDateString()}}</div>
-            </q-td>
+            <div>{{ new Date(product_date.row.product_date.from).toLocaleDateString() }}</div>
+            <div>{{ new Date(product_date.row.product_date.to).toLocaleDateString() }}</div>
+          </q-td>
         </template>
 
         <!-- 縣市區域 -->
         <template #body-cell-region="region">
           <q-td>
             <!-- class="text-wrapper" 文字過長自動換行 -->
-            <div class="text-wrapper">{{region.row.region}}</div>
+            <div class="text-wrapper">{{ region.row.region }}</div>
           </q-td>
         </template>
 
@@ -65,7 +59,7 @@
         <template #body-cell-image="image">
           <q-td>
             <!-- {{image.row.image}} -->
-            <img :src="image.row.image" style="width:100px"/>
+            <img :src="image.row.image" style="width:100px" />
           </q-td>
         </template>
 
@@ -73,7 +67,7 @@
         <template #body-cell-description="description">
           <q-td>
             <!-- class="text-wrapper" 文字過長自動換行 -->
-            <div class="text-wrapper">{{description.row.description}}</div>
+            <div class="text-wrapper">{{ description.row.description }}</div>
           </q-td>
         </template>
 
@@ -81,7 +75,7 @@
         <template #body-cell-bulletin="bulletin">
           <q-td>
             <!-- class="text-wrapper" 文字過長自動換行 -->
-            <div class="text-wrapper">{{bulletin.row.bulletin}}</div>
+            <div class="text-wrapper">{{ bulletin.row.bulletin }}</div>
           </q-td>
         </template>
 
@@ -94,8 +88,8 @@
         <!-- https://quasar.dev/vue-components/table#qtable-api -->
         <!-- Body slots <q-td>在裡面再新增一個按鈕</q-td> -->
         <!-- QTable API - body-cell-[name] Slot to define how a specific column cell looks like; replace '[name]' with column name (from columns definition object) -->
-        </q-table>
-      </div>
+      </q-table>
+    </div>
   </div>
 
   <!-- 新增商品 彈出視窗 -->
@@ -103,19 +97,19 @@
     <q-dialog v-model="form.dialog" persistent>
       <q-card class="q-pa-lg">
         <q-form @submit.prevent='submitForm'>
-        <!-- @submit.prevent取消=改成執行'submitForm' => 不執行原本的submit，因為不知道資料要送去哪，新function會傳送到後台資料庫，點同一個 submit 按鈕，執行新的 function => submitForm -->
-              <div class="row">
-                <div class="col-12">
-                  <q-input v-model='form.name' label='名稱' :rules='[rules.required]'></q-input>
-                </div>
+          <!-- @submit.prevent取消=改成執行'submitForm' => 不執行原本的submit，因為不知道資料要送去哪，新function會傳送到後台資料庫，點同一個 submit 按鈕，執行新的 function => submitForm -->
+          <div class="row">
+            <div class="col-12">
+              <q-input v-model='form.name' label='名稱' :rules='[rules.required]'></q-input>
+            </div>
 
-                <!-- 必須物件型態 {} https://quasar.dev/vue-components/date#with-qinput -->
-                <!-- 用分類 + - 去寫 日期多筆資料 -->
-                <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date -->
-                <div class="col-6">
-                    {{form.product_date.from}}
-                  <q-input v-model="form.product_date.from" stack-label label='行程日期' :rules="['date']">
-                    <!-- <template v-slot:append>
+            <!-- 必須物件型態 {} https://quasar.dev/vue-components/date#with-qinput -->
+            <!-- 用分類 + - 去寫 日期多筆資料 -->
+            <!-- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date -->
+            <div class="col-6">
+              {{ form.product_date.from }}
+              <q-input v-model="form.product_date.from" stack-label label='行程日期' :rules="['date']">
+                <!-- <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                           <q-date v-model="form.product.from"  range>
@@ -126,28 +120,28 @@
                         </q-popup-proxy>
                       </q-icon>
                     </template> -->
-                  </q-input>
-                </div>
-                <div class="col-6">
-                  {{form.product_date.to}}
-                  <q-input v-model="form.product_date.to" stack-label label='行程日期' :rules="['date']">
-                  <template v-slot:append>
-                      <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="form.product_date"  range>
-                            <div class="row items-center justify-end">
-                              <q-btn v-close-popup label="Close" color="primary" flat />
-                            </div>
-                          </q-date>
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                  </q-input>
-                </div>
+              </q-input>
+            </div>
+            <div class="col-6">
+              {{ form.product_date.to }}
+              <q-input v-model="form.product_date.to" stack-label label='行程日期' :rules="['date']">
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                      <q-date v-model="form.product_date" range>
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" color="primary" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </div>
 
-                <!-- <div class="col-12"> -->
-                    <!-- {{typeof(form.product_date)}} -->
-                  <!-- <q-input v-model="form.product_date_start" stack-label label='行程出發日期' :rules="['date']">
+            <!-- <div class="col-12"> -->
+            <!-- {{typeof(form.product_date)}} -->
+            <!-- <q-input v-model="form.product_date_start" stack-label label='行程出發日期' :rules="['date']">
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -177,34 +171,36 @@
                   </q-input>
                 </div> -->
 
-                <div class="col-12">
-                  <q-input v-model='form.region' label='縣市區域' :rules='[rules.required]'></q-input>
-                </div>
-                <div class="col-12">
-                  <q-select :options='options' emit-value map-options v-model='form.category' label='大分類' @update:model-value="form.sub = ''"></q-select>
-                </div>
-                <div class="col-12">
-                  <q-select :options='suboptions' emit-value map-options v-model='form.sub' label='小分類'></q-select>
-                </div>
-                <div class="col-12">
-                  <q-input type='number' v-model.number='form.price' label='價格' :rules='[rules.required, rules.price]'></q-input>
-                </div>
-                <div class="col-12">
-                  <q-file v-model='form.image' show-size accept='image/*' label='商品圖片' :rules='[rules.size]'></q-file>
-                </div>
-                <div class="col-12">
-                  <q-input type="textarea" v-model='form.description' label='商品描述'></q-input>
-                </div>
-                <div class="col-12">
-                  <q-input type="textarea" v-model='form.bulletin' label='公告提醒'></q-input>
-                </div>
-                <div class="col-12">
-                  <q-input v-model='form.reserve' label='庫存數量(名額)'></q-input>
-                </div>
-                <div class="col-12">
-                  <q-checkbox v-model='form.sell' label='上架'></q-checkbox>
-                </div>
-              </div>
+            <div class="col-12">
+              <q-input v-model='form.region' label='縣市區域' :rules='[rules.required]'></q-input>
+            </div>
+            <div class="col-12">
+              <q-select :options='options' emit-value map-options v-model='form.category' label='大分類'
+                @update:model-value="form.sub = ''"></q-select>
+            </div>
+            <div class="col-12">
+              <q-select :options='suboptions' emit-value map-options v-model='form.sub' label='小分類'></q-select>
+            </div>
+            <div class="col-12">
+              <q-input type='number' v-model.number='form.price' label='價格' :rules='[rules.required, rules.price]'>
+              </q-input>
+            </div>
+            <div class="col-12">
+              <q-file v-model='form.image' show-size accept='image/*' label='商品圖片' :rules='[rules.size]'></q-file>
+            </div>
+            <div class="col-12">
+              <q-input type="textarea" v-model='form.description' label='商品描述'></q-input>
+            </div>
+            <div class="col-12">
+              <q-input type="textarea" v-model='form.bulletin' label='公告提醒'></q-input>
+            </div>
+            <div class="col-12">
+              <q-input v-model='form.reserve' label='庫存數量(名額)'></q-input>
+            </div>
+            <div class="col-12">
+              <q-checkbox v-model='form.sell' label='上架'></q-checkbox>
+            </div>
+          </div>
           <q-card-actions>
             <q-space />
             <q-btn type='submit' color='primary' v-close-popup>確定</q-btn>
@@ -256,6 +252,7 @@ const products = reactive([])
 const productscategory = reactive([])
 // ([]) products 丟到空陣列中
 
+// 初始化
 const form = reactive({
   // 清空欄位 + 賦予欄位資料型態 (欄位不一定宣告 const 的時候是空的) =>  '' 字串 , 0 數字 , true | false 布林值 , null 物件
   _id: '',
@@ -283,13 +280,13 @@ const form = reactive({
   dialog: false
 })
 const rules = reactive({
-  required (v) {
+  required(v) {
     return !!v || '必填'
   },
-  price (v) {
+  price(v) {
     return v > -1 || '必須大於等於 0'
   },
-  size (v) {
+  size(v) {
     return !v || !v.length || (v[0]?.type?.includes('image') && v[0]?.size < 1024 * 1024) || '檔案格式不符'
   }
 })

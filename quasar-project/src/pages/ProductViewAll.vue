@@ -1,36 +1,31 @@
 <!-- ProductViewAll -->
 <!-- 已上架商品 -->
 <template>
-<div>
-    <q-splitter
-      v-model="splitterModel"
-    >
+  <div>
+    <q-splitter v-model="splitterModel">
 
       <template v-slot:before>
-        <q-tabs
-          v-model="tab"
-          vertical
-          class="text-teal-10"
-        >
-          <q-tab class="text-h6" name="difficulty" >難度分類</q-tab>
+        <q-tabs v-model="tab" vertical class="text-teal-10">
+          <q-tab class="text-h6" name="difficulty">難度分類</q-tab>
 
           <div class="text-center">
-            <div class="columns" >
+            <div class="columns">
               <!-- 第一個迴圈抓大的分類組(大分類category+小分類sub => 對照資料庫，顯示category) -->
               <div class="col-3 " v-for='productscategory in productscategorys' :key='productscategory._id'>
                 <div class="q-pa-xs text-h6"> | {{ productscategory.category }} | </div>
                 <!-- <div class="q-pa-xs text-h6">{{ productscategorys[1].sub[0].name }}</div> -->
                 <!-- 第二個迴圈抓小的分類組(只有小分類sub => 對照資料庫，顯示sub 用tab包起來) -->
-                  <q-tab class="col-3 " :name="categoryname._id" v-for='categoryname in productscategory.sub' :key='categoryname._id' @click="filterdata(categoryname._id)">
+                <q-tab class="col-3 " :name="categoryname._id" v-for='categoryname in productscategory.sub'
+                  :key='categoryname._id' @click="filterdata(categoryname._id)">
                   <!-- <div class="q-pa-xs text-h6">{{ productscategory.sub }}</div> -->
-                    <div class="q-pa-xs text-h6">{{ categoryname.name }}</div>
-                    <!-- <div class="q-pa-xs text-h6">{{ categoryname._id }}</div> -->
-                  </q-tab>
+                  <div class="q-pa-xs text-h6">{{ categoryname.name }}</div>
+                  <!-- <div class="q-pa-xs text-h6">{{ categoryname._id }}</div> -->
+                </q-tab>
               </div>
             </div>
           </div>
 
-          <q-tab class="text-h6" name="customized" >客製化行程</q-tab>
+          <q-tab class="text-h6" name="customized">客製化行程</q-tab>
 
           <!-- 原固定架構
             <div class="col-12">
@@ -43,12 +38,7 @@
       </template>
 
       <template v-slot:after>
-        <q-tab-panels
-          v-model="tab"
-          animated
-          swipeable
-          vertical
-        >
+        <q-tab-panels v-model="tab" animated swipeable vertical>
 
           <q-tab-panel name="difficulty">
             <div class="text-h4 q-mb-md">難度分類</div>
@@ -82,7 +72,7 @@
           <!-- v-for 要放在 tab-panel 下一層，因一個 tab 只會對應一個 tab-panel，若放在 tab-panel 同層跑回圈，會抓到 4 個 tab-panel 商品資料，但只能顯示一個其他資料不會顯示，放在 tab-panel 下一層跑回圈，用 tab-panel 包 4 個商品資料，就可以顯示全部商品 -->
           <q-tab-panel :name="productsubResult[0]?.sub">
             <div v-for="subResult in productsubResult" :key="subResult.sub">
-              <ProductCard :product ='subResult' />
+              <ProductCard :product='subResult' />
               <!-- 測試顯示資料
                 <q-card class="test-card q-pa-md q-ma-md column">
                 <div>{{productsubResult[0]?.name}}</div>
@@ -96,12 +86,18 @@
             </div>
           </q-tab-panel>
 
-            <q-tab-panel name="customized">
-              <div class="text-h4 q-mb-md"> 客製化行程 </div>
-              <p>Lorem ipsum dolor sit, amet consectetur  adipisicing elit. Quis praesentium cumque magnam   odio iure quidem, quod illum numquam possimus   obcaecati commodi minima assumenda consectetur  culpa fuga nulla ullam. In, libero.</p>
-              <p>Lorem ipsum dolor sit, amet consectetur  adipisicing elit. Quis praesentium cumque magnam   odio iure quidem, quod illum numquam possimus   obcaecati commodi minima assumenda consectetur  culpa fuga nulla ullam. In, libero.</p>
-              <p>Lorem ipsum dolor sit, amet consectetur  adipisicing elit. Quis praesentium cumque magnam   odio iure quidem, quod illum numquam possimus   obcaecati commodi minima assumenda consectetur  culpa fuga nulla ullam. In, libero.</p>
-            </q-tab-panel>
+          <q-tab-panel name="customized">
+            <div class="text-h4 q-mb-md"> 客製化行程 </div>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure
+              quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam.
+              In, libero.</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure
+              quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam.
+              In, libero.</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure
+              quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam.
+              In, libero.</p>
+          </q-tab-panel>
         </q-tab-panels>
 
       </template>
@@ -113,7 +109,7 @@
   <!-- ProductCard => components 的 ProductCard.vue (=> 重複 code 寫成一個元件) -->
   <!-- :product='product' => 把 products 陣列裡面的 'product' 商品物件資料，放到 components 裡面 ProductCard.vue 相對應位置 :product 中 -->
 
-    <!-- <div class="q-pa-md row items-start q-gutter-md">
+  <!-- <div class="q-pa-md row items-start q-gutter-md">
       <div class="row" >
         <q-tab-panel :name="product.sub._id" class="col-3 " v-for='product in products' :key='product._id'>
           <ProductCard :product='product' />
@@ -176,11 +172,12 @@ const findCategoryIdx = (subid) => {
 const init = async () => {
   try {
     const { data: categoryData } = await api.get('/products_category/all')
-    console.log('here')
+    // console.log('here')
     productscategorys.splice(0, productscategorys.length)
     // 後台資料存入 productscategorys 陣列中
     productscategorys.push(...categoryData.result)
     // console.log(productscategorys)
+    console.log('here')
     const { data } = await api.get('/products')
     products.push(...data.result.map(product => {
       const idxs = findCategoryIdx(product.sub)

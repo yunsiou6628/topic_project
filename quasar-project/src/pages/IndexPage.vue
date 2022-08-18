@@ -61,77 +61,62 @@
 
         <!-- 商品卡片輪播圖 -->
         <div style="width: 100%;">
-          <!-- <div>
-            <div v-for="product in products" :key="product">
-              <pre>{{ product.name }}</pre>
-              <pre>{{ product.image }}</pre>
-            </div>
-          </div> -->
+
           <!-- 測試卡片顯示商品資料 -->
-          <q-card bordered flat class="card1 q-mb-lg" style="width: 100%; max-width: 250px;"
+          <!-- <q-card bordered flat class="card1 q-mb-lg" style="width: 100%; max-width: 250px;"
             v-for="(product, index) in products.slice(0, products.length / 4)" :key="index">
             <div v-for="(img, idx) in [0, 1, 2, 3]" :key="idx">
-              <img :src="products[index + index * 4 + idx].image" />
-              {{ products[index + index * 4 + idx].name }}
+              <img :src="products[index + index * 4 + idx]?.image" />
+              {{ products[index + index * 4 + idx]?.name }}
             </div>
-            <!-- <img :src="products[index + 1].image" />
-            {{ products[index + 1].name }}
-            <img :src="products[index + 2].image" />
-            {{ products[index + 2].name }}
-            <img :src="products[index + 3].image" />
-            {{ products[index + 3].name }} -->
-            <!-- <img src="https://cdn.quasar.dev/img/mountains.jpg"> -->
-
-            <!-- <q-card-section></q-card-section>
-              <div>
-                <h3>{{ product.name }}</h3>
-                <p>{{ product.description }}</p>
-              </div>
-            </q-card-section> -->
-          </q-card>
+          </q-card> -->
         </div>
 
-        <div class="q-pa-md row items-start q-gutter-md" style="width: 200px;">
-          <q-card class="card" v-for="product in products" :key="product">
-            <img src="https://cdn.quasar.dev/img/mountains.jpg">
-            <div class="text-h6">{{ product.name }}</div>
-            <div class="text-h6">{{ product.image }}</div>
-            <q-card-section>
-              <div class="text-h6">{{ product.name }}</div>
-              <div class="text-h6">{{ product.image }}</div>
-            </q-card-section>
-          </q-card>
+        <div>
+          <!-- slice(0,parseInt(products.length / 3)) => 顯示 products.length 所有商品，除 3 個一組，parseInt 有小數點強制轉換成整數 -->
+          <div class="q-pa-md">
+            <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" arrows navigation
+              swipeable animated infinite :autoplay="autoplay" control-color="light-green-5 padding" height="600px">
+
+              <q-carousel-slide v-for="(product, index) in products.slice(0, parseInt(products.length / 3))"
+                :key="index" :name="index">
+                <div v-if="index < 4">
+                  <div class="row q-pa-xl">
+                    <div class="col-4 q-pa-md" v-for="(img, idx) in [0, 1, 2]" :key="idx">
+                      <q-card>
+
+                        <img :src="products[index + index * 3 + idx]?.image"
+                          v-if="products[index + index * 3 + idx]?.image.length" />
+                        <div>{{ products[index + index * 3 + idx]?.name }}</div>
+                        <div>{{ products[index + index * 3 + idx]?.description }}</div>
+
+                      </q-card>
+                    </div>
+                  </div>
+                </div>
+              </q-carousel-slide>
+            </q-carousel>
+          </div>
         </div>
 
-        <!-- <div style="width: 100%;">
+        <!-- <div>
           <div class="q-pa-md">
             <q-carousel v-model="slide" transition-prev="slide-right" transition-next="slide-left" swipeable animated
-              control-color="primary" navigation padding arrows infinite :autoplay="autoplay"
-              @mouseenter="autoplay = false" @mouseleave="autoplay = true" height="400px">
-              <q-carousel-slide :name="1" class="column no-wrap">
-                <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-                  <q-img class="rounded-borders col-3 full-height" src="https://cdn.quasar.dev/img/mountains.jpg" />
-                  <q-img class="rounded-borders col-3 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg" />
-                  <q-img class="rounded-borders col-3 full-height" src="https://cdn.quasar.dev/img/mountains.jpg" />
-                  <q-img class="rounded-borders col-3 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg" />
-                </div>
-              </q-carousel-slide>
-              <q-carousel-slide :name="2" class="column no-wrap">
-                <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-                  <q-img class="rounded-borders col-6 full-height" src="https://cdn.quasar.dev/img/parallax2.jpg" />
-                  <q-img class="rounded-borders col-6 full-height" src="https://cdn.quasar.dev/img/quasar.jpg" />
-                </div>
-              </q-carousel-slide>
-              <q-carousel-slide :name="3" class="column no-wrap">
-                <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-                  <q-img class="rounded-borders col-6 full-height" src="https://cdn.quasar.dev/img/cat.jpg" />
-                  <q-img class="rounded-borders col-6 full-height" src="https://cdn.quasar.dev/img/linux-avatar.png" />
-                </div>
-              </q-carousel-slide>
-              <q-carousel-slide :name="4" class="column no-wrap">
-                <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-                  <q-img class="rounded-borders col-6 full-height" src="https://cdn.quasar.dev/img/material.png" />
-                  <q-img class="rounded-borders col-6 full-height" src="https://cdn.quasar.dev/img/donuts.png" />
+              control-color="primary" navigation padding arrows height="400px">
+
+              <q-carousel-slide v-for="(product, index) in products.slice(0, products.length / 4)" :key="index"
+                :name="index" class=" row items-start q-gutter-md no-wrap">
+
+                <div class="col-3" v-for="(img, idx) in [0, 1, 2, 3]" :key="idx">
+                  <q-card
+                    class="row fit q-gutter-xs q-col-gutter no-wrap column justify-center content-center items-center">
+                    {{ products[index + index * 4 + idx]?.image.length }}
+                    <img :src="products[index + index * 4 + idx]?.image"
+                      v-if="products[index + index * 4 + idx]?.image.length" style="width: 300px; height: 100px;" />
+                    {{ products[index + index * 4 + idx]?.name }}
+                    {{ products[index + index * 4 + idx]?.description }}
+
+                  </q-card>
                 </div>
               </q-carousel-slide>
             </q-carousel>
@@ -149,14 +134,14 @@ import Swal from 'sweetalert2'
 import { api } from '../boot/axios'
 
 const slide = ref(1)
-const autoplay = ref(true)
+const autoplay = ref(false)
 
 const products = reactive([])
 console.log(products)
 
 const init = async () => {
   try {
-    const { data } = await api.get('/products/getProducts')
+    const { data } = await api.get('/products')
     products.push(...data.result)
   } catch (error) {
     Swal.fire({

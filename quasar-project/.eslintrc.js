@@ -75,6 +75,7 @@ module.exports = {
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // no-unused-vars 沒使用不會報錯
-    "no-unused-vars":'off'
+    'no-unused-vars':'off',
+    'space-before-function-paren':0
   }
 }
