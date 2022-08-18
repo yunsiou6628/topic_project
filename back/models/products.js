@@ -16,16 +16,16 @@ const schema = new mongoose.Schema({
     from: Date,
     to: Date
   },
-  product_date_start: {
-    type: Date
-    // AdminProduct 會顯示 String
-    // required: [true, '行程日期未填寫']
-  },
-  product_date_over: {
-    type: Date
-    // AdminProduct 會顯示 String
-    // required: [true, '行程日期未填寫']
-  },
+  // product_date_start: {
+  //   type: Date
+  //   // AdminProduct 會顯示 String
+  //   // required: [true, '行程日期未填寫']
+  // },
+  // product_date_over: {
+  //   type: Date
+  //   // AdminProduct 會顯示 String
+  //   // required: [true, '行程日期未填寫']
+  // },
   // 縣市區域
   region: {
     type: String

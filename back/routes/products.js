@@ -22,7 +22,7 @@ const router = express.Router()
 // content => 判斷型態 ('multipart/form-data')=> 想判斷的型態(也可能是JSON)
 router.post('/', content('multipart/form-data'), auth.jwt, admin, upload, createProduct)
 // 抓取 只顯示已上架商品
-router.get('/', getProducts)
+router.get('/getProducts', getProducts)
 // 抓取 顯示已上架商品的小分類sub
 router.post('/sub', content('application/json'), getTypeProductssub)
 // 抓取 顯示所有(包含下架)商品，只有管理員可以看
