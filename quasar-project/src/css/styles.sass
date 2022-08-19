@@ -1,7 +1,5 @@
-// 重複樣式設定 (例如)
-// IndexPage...q-page (像是 CSS 的 body) id="aaa"
-// #aaa
-//     background: red
+// Breakpoints (quasar) => https://quasar.dev/style/breakpoints
+// 最大尺寸 599.99px (電腦為主)--------------------------------------------------------------------------------
 
 // 文字超過範圍自動換行
 .text-wrapper
@@ -10,11 +8,45 @@
   word-wrap: break-word
 
 
-// 首頁 --------------------------------------------------------------------------------
+// 首頁 ....................
 
 // 輪播圖
 .q-carousel
   height: 880px
 
+// 帶你去爬山區塊
+#indexImg-lg
+  height: 800px
+  position: relative
+  display: block
+
+#indexImg-xs
+  height: 800px
+  position: relative
+  display: none
 
 
+// 中尺寸 1023.99px (平板)--------------------------------------------------------------------------------
+@media (max-width: $breakpoint-sm-max)
+
+  // 首頁 ....................
+
+  // 帶你去爬山區塊
+  #indexImg-lg
+    display: block
+
+  #indexImg-xs
+    display: none
+
+
+// 最小尺寸 599.99px (手機)--------------------------------------------------------------------------------
+@media (max-width: $breakpoint-xs-max)
+
+  // 首頁 ....................
+
+  // 帶你去爬山區塊
+  #indexImg-lg
+    display: none
+
+  #indexImg-xs
+    display: block
