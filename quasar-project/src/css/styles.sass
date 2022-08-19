@@ -21,9 +21,20 @@
   display: block
 
 #indexImg-xs
-  height: 800px
   position: relative
   display: none
+
+// 卡片輪播圖
+
+// 內文多行省略 => https://codepen.io/tynadesigner/pen/ZEBGpGN
+#description-textbox
+  overflow: hidden
+  display: -webkit-box
+  -webkit-line-clamp: 3
+  /*省略第n行後的文字*/
+  -webkit-box-orient: vertical
+  /*設定元素是垂直布局*/
+
 
 
 // 中尺寸 1023.99px (平板)--------------------------------------------------------------------------------
@@ -49,4 +60,4 @@
     display: none
 
   #indexImg-xs
-    display: block
+    display: flex

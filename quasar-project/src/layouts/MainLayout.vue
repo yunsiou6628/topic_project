@@ -21,13 +21,13 @@
         <!-- 搜尋 -->
         <q-input borderless v-model="text" input-class="text-right">
           <template v-slot:append>
-            <q-icon name="search" class="text-teal-10" />
+            <q-icon name="search" class="text-teal-10 q-mx-xs" />
           </template>
         </q-input>
 
         <div>
           <!-- 聯絡我們 -->
-          <q-btn flat round color="teal-10" icon="fa-solid fa-comment-dots" to="/ContactUs" size="sm" />
+          <q-btn flat round color="teal-10" icon="fa-solid fa-comment-dots" to="/ContactUs" size="sm" class="q-mx-sm" />
           <!-- 登入前(註冊/登入) -->
           <q-btn flat round color="teal-10" icon="fa-solid fa-user" v-if='!isLogin' to="/login" size="sm" />
           <!-- 登入 - 有 dropdown 選單 -->
