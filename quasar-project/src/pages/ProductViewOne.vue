@@ -16,51 +16,88 @@
   </div>
   <div class="q-px-xxxl" style="margin-left:20%; margin-right:20%; color: #5E8A4B;">
     <div class="row">
-      <div class="col-12 q-py-sm text-center">
+      <div class="col-12 q-py-xl text-center">
         <!-- https://quasar.dev/vue-components/img#qimg-api -->
         <q-img :src="product.image" style="width: 800px; height: 500px;" />
       </div>
-      <div class="col-12 q-py-sm text-weight-bold text-h5">
+      <div class="col-12 q-py-sm text-weight-bold text-h4">
         <div> {{ product.name }} </div>
       </div>
-      <div class="col-12 q-py-sm text-weight-bold text-h6">
-        <div> ${{ product.price }} </div>
-      </div>
-      <div class="col-12 q-py-sm text-weight-bold text-subtitle1">
-        <div> {{ product.bulletin }} </div>
-      </div>
 
-      <q-separator class="q-my-lg" />
-
-      <div class="col-12 q-py-sm text-weight-bold text-subtitle1 row justify-center">
-        <div> 行程日期 : {{ new Date(product.product_date.from).toLocaleDateString()
+      <div class="col-12 q-py-sm q-my-sm text-weight-bold text-h6 row">
+        <div>{{ new Date(product.product_date.from).toLocaleDateString()
         }} </div>
         <div> ~ {{ new Date(product.product_date.to).toLocaleDateString()
         }} </div>
       </div>
 
-      <div class="col-12 q-px-xxxl">
+      <div class="col-12 q-py-sm text-weight-bold text-h6">
+        <div> ${{ product.price }} </div>
+      </div>
+
+      <div class="col-12 q-py-sm text-weight-bold text-subtitle1 ">
+        <div> {{ product.bulletin }} </div>
+      </div>
+
+      <div class="col-12 q-py-sm text-weight-bold text-subtitle1 row">
+        <span>※ 本活動以登山安全為重，堅持雙領隊前後照應，讓大家安心登山。</span>
+        <span>※ 因應防疫措施，14天內有國外旅遊史、確診者接觸史，最晚出發前1週請來電告知更換時間或取消。</span>
+      </div>
+
+      <div class="col-12">
+        <q-separator class="q-my-xl" />
+      </div>
+
+      <div class="col-12 q-px-xxxl ">
         <q-input v-model.number="quantity" type="number" filled label="數量" :rules='quantityRule'
           class="text-weight-bold text-subtitle1" style="color: #5E8A4B;" />
         <!-- 有時間再改寫 Applied to QBtn => https://quasar.dev/vue-directives/touch-repeat -->
       </div>
 
+      <div class="col-12 q-py-sm text-subtitle1 row justify-center">
+        <div> 庫存剩餘 {{ product.reserve }} </div>
+      </div>
+
       <q-form v-model='valid' @submit.prevent='submit' class="col-12 row">
-        <q-btn class="col-12 q-py-sm q-px-xxxl text-weight-bold" style=" background: #5E8A4B; color: #fff;"
+        <q-btn class="col-12 q-py-sm q-my-xl q-px-xxxl text-weight-bold" style=" background: #5E8A4B; color: #fff;"
           type='submit'>
           加入購物車</q-btn>
       </q-form>
-
-      <div class="col-12 q-py-sm text-weight-bold text-subtitle1 row justify-center">
-        <div> 庫存剩餘 {{ product.reserve }} </div>
-      </div>
 
       <div class="col-12 q-py-sm text-weight-bold text-subtitle1 text-wrapper">
         <div> {{ product.description }} </div>
       </div>
 
-      <q-btn class="col-12 q-py-sm q-px-xxxl text-weight-bold" style=" background: #5E8A4B; color: #fff;" type='submit'
-        to="/ProductViewAll">
+      <div class="col-12">
+        <q-separator class="q-my-lg" />
+      </div>
+
+      <div class="column">
+        <span>※ 費 用 說 明 :</span>
+        <span>費用包含：500萬責任險
+          (依規定15歲以下及70歲以上最高投保金額為200萬)、住宿(山屋或營地)、多天行程費用含早晚2餐/日（中餐、行動量自行準備）、高山包車費用、嚮導、領隊費用、山屋申請行政手續費等。</span>
+        <span>費用不含：額外伙食、個人登山裝備等。</span>
+      </div>
+
+      <div class="col-12">
+        <q-separator class="q-my-lg" />
+      </div>
+
+      <div class="column">
+        <span>※ 報 名 注 意 事 項 :</span>
+        <span>報名繳費後取消參加按照「國內旅遊定型化契約書」規定:</span>
+        <span>距出發日前第41日以前取消扣活動費用 5%；</span>
+        <span>出發日前第31日~第40日以前取消扣活動費用10%；</span>
+        <span>出發日前第21日~第30日以內扣20%；</span>
+        <span>出發日前第2日~第20日以內扣30%；</span>
+        <span>出發前一日扣50%；出發當日未到則扣全額100%。</span>
+        <span>
+          乙方如能證明其所受損害超過以上之基準者，得就其實際損害請求賠償。其他事項按照「國內旅遊定型化契約書」規範執行。
+        </span>
+      </div>
+
+      <q-btn class="col-12 q-py-sm q-my-xl q-px-xxxl text-weight-bold" style=" background: #5E8A4B; color: #fff;"
+        type='submit' to="/ProductViewAll">
         返回行程
       </q-btn>
 
