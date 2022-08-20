@@ -139,38 +139,6 @@
               </q-input>
             </div>
 
-            <!-- <div class="col-12"> -->
-            <!-- {{typeof(form.product_date)}} -->
-            <!-- <q-input v-model="form.product_date_start" stack-label label='行程出發日期' :rules="['date']">
-                    <template v-slot:append>
-                      <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="form.product_date_start">
-                            <div class="row items-center justify-end">
-                              <q-btn v-close-popup label="Close" color="primary" flat />
-                            </div>
-                          </q-date>
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                  </q-input>
-                </div>
-                <div class="col-12">
-                  <q-input v-model="form.product_date_over" stack-label label='行程結束日期' :rules="['date']">
-                  <template v-slot:append>
-                      <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                          <q-date v-model="form.product_date_over">
-                            <div class="row items-center justify-end">
-                              <q-btn v-close-popup label="Close" color="primary" flat />
-                            </div>
-                          </q-date>
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                  </q-input>
-                </div> -->
-
             <div class="col-12">
               <q-input v-model='form.region' label='縣市區域' :rules='[rules.required]'></q-input>
             </div>

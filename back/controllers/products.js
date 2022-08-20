@@ -77,7 +77,8 @@ export const getAllProducts = async (req, res) => {
 export const getProduct = async (req, res) => {
   try {
     // params 路由參數
-    const result = await products.findById(req.params.id)
+    const result = await products.findById(req.params.id).populate('sub.products_category.sub')
+    console.log(result)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
     res.status(500).send({ success: false, message: '伺服器錯誤' })
@@ -91,8 +92,6 @@ export const editProduct = async (req, res) => {
       name: req.body.name,
       price: req.body.price,
       product_date: JSON.parse(req.body.product_date),
-      // product_date_start: req.body.product_date_start,
-      // product_date_over: req.body.product_date_over,
       region: req.body.region,
       reserve: req.body.reserve,
       bulletin: req.body.bulletin,

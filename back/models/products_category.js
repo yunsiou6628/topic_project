@@ -17,8 +17,6 @@ const schema = new mongoose.Schema({
     default: []
   }
 
-  // 分類管理先寫出來(用小分類去分類)，後台寫好controllers products，前台用axios去抓取到後台分類資料顯示，把後台資料放入前台 options，先寫好增加修改刪除，再來寫分類
-
 }, { versionKey: false }) // 移除 versionKey、__V
 
 export default mongoose.model('products_category', schema)

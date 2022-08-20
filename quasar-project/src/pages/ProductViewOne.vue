@@ -1,50 +1,69 @@
 <!-- ProductViewOne -->
 <!-- 單商品頁 -->
 <template>
-  <div class="q-pa-xl">
+  <div class="q-pa-md q-gutter-sm">
+    <q-breadcrumbs class="text-teal-9" active-color="light-green-4">
+      <q-breadcrumbs-el label="登山行程" />
+      <!-- 大分類 -->
+      <q-breadcrumbs-el>
+        大分類 - {{ product.sub }}
+      </q-breadcrumbs-el>
+      <!-- 小分類 -->
+      <q-breadcrumbs-el>
+        小分類 - {{ product }}
+      </q-breadcrumbs-el>
+    </q-breadcrumbs>
+  </div>
+  <div class="q-px-xxxl" style="margin-left:20%; margin-right:20%; color: #5E8A4B;">
     <div class="row">
-      <div class="col-12 q-py-sm">
+      <div class="col-12 q-py-sm text-center">
+        <!-- https://quasar.dev/vue-components/img#qimg-api -->
+        <q-img :src="product.image" style="width: 800px; height: 500px;" />
+      </div>
+      <div class="col-12 q-py-sm text-weight-bold text-h5">
         <div> {{ product.name }} </div>
       </div>
-      <q-divider />
-      <div class="col-12 q-py-sm">
-        <!-- https://quasar.dev/vue-components/img#qimg-api -->
-        <q-img :src="product.image" style="max-width: 50%"/>
-      </div>
-      <div class="col-12 q-py-sm">
+      <div class="col-12 q-py-sm text-weight-bold text-h6">
         <div> ${{ product.price }} </div>
       </div>
-      <div class="col-12 q-py-sm">
-        <div> 庫存剩餘 {{ product.reserve }} </div>
-      </div>
-      <div class="col-12 q-py-sm">
-        <div style='white-space: pre;'> {{ product.description }} </div>
-      </div>
-      <div class="col-7 q-py-sm">
-        <!-- {{new Date(product_date.row.product_date).toLocaleDateString()}} -->
-        <!-- <div style='white-space: pre;'> {{new Date(product_date.row.product_date).toLocaleDateString()}} </div> -->
-        <div style='white-space: pre;'> {{ product.product_date }} </div>
-        <!-- <q-select :options='options' map-options v-model='product_date' label='行程日期' filled></q-select> -->
+      <div class="col-12 q-py-sm text-weight-bold text-subtitle1">
+        <div> {{ product.bulletin }} </div>
       </div>
 
-      <div class="col-7 q-py-sm">
-        <q-input
-          v-model.number="quantity"
-          type="number"
-          filled
-          label="數量"
-          :rules='quantityRule'
-        />
-        <!-- 之後改寫 Applied to QBtn => https://quasar.dev/vue-directives/touch-repeat -->
+      <q-separator class="q-my-lg" />
+
+      <div class="col-12 q-py-sm text-weight-bold text-subtitle1 row justify-center">
+        <div> 行程日期 : {{ new Date(product.product_date.from).toLocaleDateString()
+        }} </div>
+        <div> ~ {{ new Date(product.product_date.to).toLocaleDateString()
+        }} </div>
       </div>
-      <div class="col-12 q-py-sm">
-        <q-form v-model='valid' @submit.prevent='submit'>
-          <q-btn color='primary' type='submit'>加入購物車</q-btn>
-        </q-form>
+
+      <div class="col-12 q-px-xxxl">
+        <q-input v-model.number="quantity" type="number" filled label="數量" :rules='quantityRule'
+          class="text-weight-bold text-subtitle1" style="color: #5E8A4B;" />
+        <!-- 有時間再改寫 Applied to QBtn => https://quasar.dev/vue-directives/touch-repeat -->
       </div>
-      <q-overlay align-center justify-center :model-value='!product.sell'>
-      <!-- <q-h1 text-black>未上架</q-h1> -->
-      </q-overlay>
+
+      <q-form v-model='valid' @submit.prevent='submit' class="col-12 row">
+        <q-btn class="col-12 q-py-sm q-px-xxxl text-weight-bold" style=" background: #5E8A4B; color: #fff;"
+          type='submit'>
+          加入購物車</q-btn>
+      </q-form>
+
+      <div class="col-12 q-py-sm text-weight-bold text-subtitle1 row justify-center">
+        <div> 庫存剩餘 {{ product.reserve }} </div>
+      </div>
+
+      <div class="col-12 q-py-sm text-weight-bold text-subtitle1 text-wrapper">
+        <div> {{ product.description }} </div>
+      </div>
+
+      <q-btn class="col-12 q-py-sm q-px-xxxl text-weight-bold" style=" background: #5E8A4B; color: #fff;" type='submit'
+        to="/ProductViewAll">
+        返回行程
+      </q-btn>
+
     </div>
   </div>
 </template>
@@ -101,6 +120,7 @@ const submit = () => {
 const init = async () => {
   try {
     const { data } = await api.get('/products/' + route.params.id)
+    console.log('21231' + data.result)
     product._id = data.result._id
     product.name = data.result.name
     product.product_date = data.result.product_date
@@ -118,7 +138,8 @@ const init = async () => {
       title: '失敗',
       text: '取得商品資料失敗'
     })
-    router.go(-1)
+    // router.go(-1)
+    // 錯了跳頁回去原本頁面
   }
 }
 init()

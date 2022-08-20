@@ -2,13 +2,7 @@
 <template>
   <div class="q-pa-xl">
     <div class="col-12">
-      <q-table
-          title="訂單管理"
-          :rows="orders"
-          :columns="columns"
-          row-key="name"
-          :filter="filter"
-      >
+      <q-table title="訂單管理" :rows="orders" :columns="columns" row-key="name" :filter="filter">
         <template #body-cell-name="name">
           <q-td>
             <pre>{{ name.row.name }}</pre>
@@ -26,7 +20,7 @@
             <!-- <pre>{{ products.row.products }}</pre> -->
             <!-- <pre>{{ products.row.products[0].product.name }}</pre> -->
             <div v-for="product in products.row.products" :key="product">
-            <pre>{{product.product.name}}</pre>
+              <pre>{{ product.product.name }}</pre>
             </div>
           </q-td>
         </template>
@@ -36,7 +30,7 @@
             <!-- <pre>{{ quantity.row.products }}</pre> -->
             <!-- <pre>{{ quantity.row.products[0].quantity }}</pre> -->
             <div v-for="num in quantity.row.products" :key="num">
-            <pre>{{num.quantity}}</pre>
+              <pre>{{ num.quantity }}</pre>
             </div>
           </q-td>
         </template>
@@ -51,30 +45,30 @@
         </template>
 
         <template #body-cell-cardname="cardname">
-            <q-td>
-              <!-- <pre>{{ cardname.row }}</pre> -->
-              <div>{{ cardname.row.cardname }}</div>
-              <div>{{ cardname.row.checkName }}</div>
-              <div>{{ cardname.row.atmcheckName }}</div>
-            </q-td>
-          </template>
+          <q-td>
+            <!-- <pre>{{ cardname.row }}</pre> -->
+            <div>{{ cardname.row.cardname }}</div>
+            <div>{{ cardname.row.checkName }}</div>
+            <div>{{ cardname.row.atmcheckName }}</div>
+          </q-td>
+        </template>
 
         <template #body-cell-PAYaccound="PAYaccound">
-            <q-td>
-              <!-- <pre>{{ PAYaccound.row }}</pre> -->
-              <div>{{ PAYaccound.row.cardnumber }}</div>
-              <div>{{ PAYaccound.row.checkAccount }}</div>
-              <div>{{ PAYaccound.row.atmcheckAccount }}</div>
-            </q-td>
-          </template>
+          <q-td>
+            <!-- <pre>{{ PAYaccound.row }}</pre> -->
+            <div>{{ PAYaccound.row.cardnumber }}</div>
+            <div>{{ PAYaccound.row.checkAccount }}</div>
+            <div>{{ PAYaccound.row.atmcheckAccount }}</div>
+          </q-td>
+        </template>
 
         <!-- 編輯|刪除 -->
         <template #body-cell-edit="edit">
           <q-td>
             <!-- {{edit.row}} -->
-            <q-btn @click="openDialog(edit.row._id)">編輯</q-btn>
+            <!-- <q-btn @click="openDialog(edit.row._id)">編輯</q-btn> -->
             <q-btn @click="deleteorder(edit.row._id)">刪除</q-btn>
-            </q-td>
+          </q-td>
         </template>
 
       </q-table>
