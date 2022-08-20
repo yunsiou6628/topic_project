@@ -16,7 +16,7 @@
                 <!-- <div class="q-pa-xs text-h6">{{ productscategorys[1].sub[0].name }}</div> -->
                 <!-- 第二個迴圈抓小的分類組(只有小分類sub => 對照資料庫，顯示sub 用tab包起來) -->
                 <q-tab class="col-3 " :name="categoryname._id" v-for='categoryname in productscategory.sub'
-                  :key='categoryname._id' @click="filterdata(categoryname._id)">
+                  :key='categoryname._id' @click="filterdata(categoryname._id, categoryname.name)">
                   <!-- <div class="q-pa-xs text-h6">{{ productscategory.sub }}</div> -->
                   <div class="q-pa-xs text-h6">{{ categoryname.name }}</div>
                   <!-- <div class="q-pa-xs text-h6">{{ categoryname._id }}</div> -->
@@ -70,8 +70,9 @@
 
           <!-- productsubResult[0]?.sub => 抓到商品小分類第一筆資料的小分類 sub 的 id 右邊區塊 tab-panel (用 sub 的 id 對應到左邊欄位 tab) -->
           <!-- v-for 要放在 tab-panel 下一層，因一個 tab 只會對應一個 tab-panel，若放在 tab-panel 同層跑回圈，會抓到 4 個 tab-panel 商品資料，但只能顯示一個其他資料不會顯示，放在 tab-panel 下一層跑回圈，用 tab-panel 包 4 個商品資料，就可以顯示全部商品 -->
-          <q-tab-panel :name="productsubResult[0]?.sub">
-            <div v-for="subResult in productsubResult" :key="subResult.sub">
+          <q-tab-panel class="row q-px-xl" :name="productsubResult[0]?.sub">
+            {{ mainname }}
+            <div class="col-12 col-md-6 col-lg-4" v-for="subResult in productsubResult" :key="subResult.sub">
               <ProductCard :product='subResult' />
               <!-- 測試顯示資料
                 <q-card class="test-card q-pa-md q-ma-md column">
@@ -135,14 +136,16 @@ const form = reactive({
 const tab = ref('difficulty')
 const splitterModel = ref(20)
 
+const mainname = ref('')
 const products = reactive([])
 const productscategorys = reactive([])
 const productsubResult = reactive([])
 
 // 已上架商品的小分類sub id
 // click 按鈕 function => 左欄位 tab 對應到 右區塊 tab-panels 的 function
-const filterdata = async (productsubid) => {
+const filterdata = async (productsubid, categoryname) => {
   form.sub = productsubid
+  mainname.value = categoryname
   // console.log(form.sub)
   try {
     const { data } = await api.post('/products/sub', form)
