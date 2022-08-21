@@ -98,7 +98,7 @@
     <div class="flex flex-center" style="width: 100%; height: 900px;">
       <div class="row" style="width: 80%; height: 80%;">
 
-        <div class="col-12 teal-10" style="font-size: 18px; color: #5E8A4B; text-align: center;">
+        <div class="col-12 text-weight-bold" style="font-size: 18px; color: #5E8A4B; text-align: center;">
           <h3>最新行程</h3>
         </div>
 
@@ -120,11 +120,11 @@
                     <img style="width: 100%; height: 200px;" :src="products[index + index * 3 + idx]?.image"
                       v-if="products[index + index * 3 + idx]?.image.length" />
 
-                    <div class="text-h6 q-px-md q-py-lg">
+                    <div class="text-h6 q-px-md q-py-lg text-weight-bold">
                       {{ products[index + index * 3 + idx]?.name }}
                     </div>
 
-                    <div id="description-textbox" class="text-body1 q-px-md q-py-xs">
+                    <div id="description-textbox" class="text-body1 q-px-md q-py-xs text-weight-bold">
                       {{ products[index + index * 3 + idx]?.description }}
                     </div>
 
@@ -201,70 +201,6 @@
       </div>
     </div>
 
-    <!-- footer -->
-    <div class="col-12 relative-position">
-      <!-- 底圖 -->
-      <!-- 電腦大尺寸顯示 -->
-      <img src="https://i.imgur.com/Y3YFphD.png" class="gt-md"
-        style="width: 100%; vertical-align: middle; bottom: 0; z-index: 1;">
-      <!-- 平板手機中小尺寸顯示 -->
-      <img src="https://i.imgur.com/iXamMg1.png" class="lt-lg"
-        style="width: 100%; vertical-align: middle; bottom: 0; z-index: 1;">
-
-      <!-- 文字 -->
-      <div
-        class="col-12 gt-md absolute-center full-width row wrap q-pa-xl q-px-xxxl text-subtitle1 text-white text-weight-bold"
-        style="margin-top: 7%; text-shadow: #616A6B 1px 1px 5px">
-
-        <div class="col-3  q-pl-xl">
-          <p>帶你去爬山</p>
-          <p>台灣登山社有限公司</p>
-          <p>統一編號：00000000</p>
-          <p>交觀甲0000 │ 品保北0000</p>
-        </div>
-
-        <div class="col-4 column justify-end">
-          <div class="row items-center q-mb-md">
-            <i class="fa-solid fa-phone"></i>
-            <span class="q-pl-md">0900-000-000</span>
-          </div>
-          <div class="row items-center q-mb-md ">
-            <i class="fa-solid fa-envelope "></i>
-            <span class="q-pl-md">gohiking.today2021@gmail.com</span>
-          </div>
-          <div class="row items-center q-mb-md">
-            <span>Apple Podcast / Spotify / KKBOX</span>
-            <i class="fa-solid fa-magnifying-glass q-pl-md q-pr-sm"></i>
-            <span> 她與她的山友們</span>
-          </div>
-        </div>
-
-        <div class="col-5 column  justify-end">
-          <div class="row justify-end content-center q-px-xl q-py-lg">
-            <a href="https://page.line.me/?accountId=gohiking.today" class="q-px-sm text-white text-h5"><i
-                class="fa-brands fa-line text-white"></i></a>
-            <a href="https://www.instagram.com/gohiking.today/" class="q-px-sm text-white text-h5"><i
-                class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.facebook.com/gohiking.today.fb/" class="q-px-sm text-white text-h5"><i
-                class="fa-brands fa-facebook"></i></a>
-            <a href="https://podcasts.apple.com/us/podcast/%E5%A5%B9%E8%88%87%E5%A5%B9%E7%9A%84%E5%B1%B1%E5%8F%8B%E5%80%91/id1614216258"
-              class="q-px-sm text-white text-h5"><i class="fa-solid fa-podcast"></i></a>
-
-            <a href="https://open.spotify.com/show/2OEenV9E1AZKPoWkBx2CCn" class="q-px-sm text-white text-h5"><i
-                class="fa-brands fa-spotify"></i></a>
-          </div>
-          <div class="row justify-end content-center q-px-xl q-mb-md">
-            <span>《條款與細則》</span>
-            <span>《退換貨政策》</span>
-            <span>《隱私權政策》</span>
-          </div>
-          <div class="row justify-end content-center q-px-xl q-mb-md">
-            <span>gohiking.today 2022 © Taiwan gohiking. All Rights Resverved </span>
-          </div>
-        </div>
-      </div>
-
-    </div>
   </q-page>
 </template>
 

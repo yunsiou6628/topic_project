@@ -1,7 +1,7 @@
 // middleware - content.js 內容
 // 把 controllers 的 user.js 內容類型 => 抓出來寫(不然會一直重複寫)
 
-// content-type 驗證
+// content-type 驗證型態
 // 寫 middleware 一定要有 (req, res, next)
 export default (type) => {
   return (req, res, next) => {

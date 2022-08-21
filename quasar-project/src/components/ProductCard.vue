@@ -3,14 +3,15 @@
 <!-- 卡片上的資料 -->
 <template>
 
-  <router-link :to="'/product/' + product._id">
+  <router-link :to="'/product/' + product._id" style="text-decoration:none;">
     <!-- router-link = a 標籤 -->
-    <q-card class=" my-card q-pa-md q-ma-md column">
+    <q-card class=" q-pa-md q-ma-md column" style="color: #5E8A4B;">
       <q-img :src="product.image" />
       <!-- :src="product.image" => : 為了後面可以接 變數 -->
-      <div class="q-pa-xs text-h6">{{ product.name }}</div>
-      <div class="q-pa-xs text-subtitle2">{{ product.region }}</div>
-      <div class="q-pa-xs text-caption">{{ product.description }}</div>
+      <div class="q-pa-xs text-h6 text-weight-bold">{{ product.name }}</div>
+      <div class="q-pa-xs text-subtitle2 text-weight-bold"> <i class="fa-solid fa-location-dot"></i> {{ product.region
+      }}</div>
+      <div class="q-pa-xs text-caption text-weight-bold" id="description-textbox">{{ product.description }}</div>
     </q-card>
   </router-link>
 </template>

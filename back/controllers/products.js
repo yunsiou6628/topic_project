@@ -1,5 +1,6 @@
 // controllers - products.js  => 商品新增/編輯/刪除/查詢
 // controllers 呼叫 models 對 資料庫(mongo DB)做 "新增/編輯/刪除/查詢"的操作
+// 接在 products.後面的動做 =>  mongoose 語法 (像是 create / find .....)
 
 // import { json } from 'express'
 import products from '../models/products.js'
@@ -10,6 +11,7 @@ export const createProduct = async (req, res) => {
     // console.log(req.file)
     console.log(req.body.product_date)
     console.log(JSON.parse(req.body.product_date))
+    // 去 products 資料庫 create 創建資料
     const result = await products.create({
       name: req.body.name,
       price: req.body.price,
@@ -43,6 +45,7 @@ export const createProduct = async (req, res) => {
 }
 
 // 已上架商品
+// result => 所有上架商品 products.find({ sell: true }) 給到 result 的資料
 export const getProducts = async (req, res) => {
   try {
     const result = await products.find({ sell: true })
@@ -55,7 +58,8 @@ export const getProducts = async (req, res) => {
 // 抓到已上架商品的小分類sub
 export const getTypeProductssub = async (req, res) => {
   try {
-    const result = await products.find({ sub: req.body.sub })
+    const result = await products.find({ sell: true, sub: req.body.sub })
+    // const result = await products.find({ sub: req.body.sub })
     // console.log(result)
     res.status(200).send({ success: true, message: '', result })
   } catch (error) {
@@ -77,6 +81,8 @@ export const getAllProducts = async (req, res) => {
 export const getProduct = async (req, res) => {
   try {
     // params 路由參數
+    // patch( '/products/' + form._id )
+    // 前台路徑後面的欄位( + 後面的東西) = req.params.id
     const result = await products.findById(req.params.id).populate('sub.products_category.sub')
     console.log(result)
     res.status(200).send({ success: true, message: '', result })

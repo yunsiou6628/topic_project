@@ -40,6 +40,7 @@
       <template v-slot:after>
         <q-tab-panels v-model="tab" animated swipeable vertical>
 
+          <!-- 難度分類 -->
           <q-tab-panel name="difficulty">
             <div class="text-h4 q-mb-md">難度分類</div>
             <div class="q-py-md">
@@ -54,7 +55,7 @@
               <p>百岳高級C+級 : 4天以上長天數縱走行程</p>
             </div>
 
-            <!-- 改成從後台可編輯 -->
+            <!-- 有時間再改成從後台可編輯 -->
             <div class="text-h4">行前須知</div>
             <div>
               <h6>登山技巧</h6>
@@ -68,11 +69,23 @@
             </div>
           </q-tab-panel>
 
+          <!-- 大小分類商品資料 -->
           <!-- productsubResult[0]?.sub => 抓到商品小分類第一筆資料的小分類 sub 的 id 右邊區塊 tab-panel (用 sub 的 id 對應到左邊欄位 tab) -->
           <!-- v-for 要放在 tab-panel 下一層，因一個 tab 只會對應一個 tab-panel，若放在 tab-panel 同層跑回圈，會抓到 4 個 tab-panel 商品資料，但只能顯示一個其他資料不會顯示，放在 tab-panel 下一層跑回圈，用 tab-panel 包 4 個商品資料，就可以顯示全部商品 -->
-          <q-tab-panel class="row q-px-xl" :name="productsubResult[0]?.sub">
-            {{ mainname }}
-            <div class="col-12 col-md-6 col-lg-4" v-for="subResult in productsubResult" :key="subResult.sub">
+          <q-tab-panel class="row q-px-xxxl" :name="productsubResult[0]?.sub">
+
+            <!-- 小分類標題 -->
+            <div class="col-12 q-pt-xl flex flex-center text-weight-bold text-h3" style="color: #5E8A4B;">
+              <div>{{ mainname }}</div>
+            </div>
+
+            <!-- 分隔線 -->
+            <div class="col-12">
+              <q-separator class="q-my-xl" />
+            </div>
+
+            <!-- 行程 card -->
+            <div class="col-12 col-md-6 col-lg-4 q-pa-sm" v-for="subResult in productsubResult" :key="subResult.sub">
               <ProductCard :product='subResult' />
               <!-- 測試顯示資料
                 <q-card class="test-card q-pa-md q-ma-md column">
@@ -85,8 +98,10 @@
                 <q-img :src="subResult.image" />
               </q-card> -->
             </div>
+
           </q-tab-panel>
 
+          <!-- 客製化行程 -->
           <q-tab-panel name="customized">
             <div class="text-h4 q-mb-md"> 客製化行程 </div>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure
