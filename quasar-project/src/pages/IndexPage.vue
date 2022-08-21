@@ -124,7 +124,7 @@
                       {{ products[index + index * 3 + idx]?.name }}
                     </div>
 
-                    <div id="description-textbox" class="text-body1 q-px-md q-py-xs text-weight-bold">
+                    <div class="text-body1 q-px-md text-weight-bold description-textbox">
                       {{ products[index + index * 3 + idx]?.description }}
                     </div>
 
@@ -136,7 +136,7 @@
           </q-carousel>
         </div>
         <!-- 中尺寸 -->
-        <div class="text-teal-10 gt-xs lt-lg " id="cardCarousel2">
+        <div class=" gt-xs lt-lg " id="cardCarousel2" style=" color: #5E8A4B;">
           <q-carousel v-model="slide3" transition-prev="slide-right" transition-next="slide-left" arrows navigation
             swipeable animated infinite :autoplay="autoplay3" control-color="light-green-5 padding" height="600px">
 
@@ -151,11 +151,11 @@
                     <img style="width: 100%; height: 200px;" :src="products[index + index * 3 + idx]?.image"
                       v-if="products[index + index * 2 + idx]?.image.length" />
 
-                    <div class="text-h6 q-px-md q-py-lg">
+                    <div class="text-h6 q-px-md q-py-lg text-weight-bold">
                       {{ products[index + index * 2 + idx]?.name }}
                     </div>
 
-                    <div id="description-textbox" class="text-body1 q-px-md q-py-xs">
+                    <div class="text-body1 q-px-md text-weight-bold description-textbox">
                       {{ products[index + index * 2 + idx]?.description }}
                     </div>
 
@@ -168,7 +168,7 @@
         </div>
 
         <!-- 小尺寸 -->
-        <div class="text-teal-10 lt-sm" id="cardCarousel1">
+        <div class=" lt-sm" id="cardCarousel1" style=" color: #5E8A4B;">
           <q-carousel v-model="slide4" transition-prev="slide-right" transition-next="slide-left" arrows navigation
             swipeable animated infinite :autoplay="autoplay4" control-color="light-green-5 padding" height="600px">
             <!-- products.length - 5 => 商品總長度 - 最新的 5 筆資料顯示 -->
@@ -182,11 +182,11 @@
 
                     <img style="width: 100%; height: 200px;" :src="product?.image" />
 
-                    <div class="text-h6 q-px-md q-py-lg">
+                    <div class="text-h6 q-px-md q-py-lg text-weight-bold">
                       {{ product?.name }}
                     </div>
 
-                    <div id="description-textbox" class="text-body1 q-px-md q-py-xs">
+                    <div class="text-body1 q-px-md text-weight-bold description-textbox">
                       {{ product?.description }}
                     </div>
 

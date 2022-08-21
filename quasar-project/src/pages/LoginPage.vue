@@ -4,18 +4,11 @@
 <!-- https://quasar.dev/vue-components/input -->
 
 <template>
-<div class="q-pa-md fixed-center">
+  <div class="q-pa-md q-py-xl row justify-center">
     <div class="q-gutter-y-md" style="width: 800px">
       <q-card>
-        <q-tabs
-          v-model="tab"
-          dense
-          class="text-grey"
-          active-color="primary"
-          indicator-color="primary"
-          align="justify"
-          narrow-indicator
-        >
+        <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify"
+          narrow-indicator>
           <q-tab name="mails" label="註冊" />
           <q-tab name="alarms" label="登入" />
         </q-tabs>
@@ -32,47 +25,25 @@
 
             <!-- 註冊 表單欄位 -->
             <div class="q-pa-xl">
-              <q-form
-              @submit.prevent='register'
-              class="q-gutter-md items-start q-py-sm"
-              >
+              <q-form @submit.prevent='register' class="q-gutter-md items-start q-py-sm">
                 <!-- 帳號 -->
                 <div class="col-5">
-                  {{registerform.account}}
-                <q-input
-                  filled
-                  type='text'
-                  label="account"
-                  v-model="registerform.account"
-                  lazy-rules
-                  :rules="rules.account"
-                />
+                  {{ registerform.account }}
+                  <q-input filled type='text' label="account" v-model="registerform.account" lazy-rules
+                    :rules="rules.account" />
                 </div>
 
                 <!-- 密碼 -->
                 <div class="col-5">
-                  {{registerform.password}}
-                <q-input
-                  filled
-                  type="password"
-                  label="password"
-                  v-model="registerform.password"
-                  lazy-rules
-                  :rules="rules.password"
-                />
+                  {{ registerform.password }}
+                  <q-input filled type="password" label="password" v-model="registerform.password" lazy-rules
+                    :rules="rules.password" />
                 </div>
 
                 <!-- 名字 -->
                 <div class="col-5">
-                  {{registerform.name}}
-                <q-input
-                  filled
-                  type="name"
-                  label="name"
-                  v-model="registerform.name"
-                  lazy-rules
-                  :rules="rules.name"
-                />
+                  {{ registerform.name }}
+                  <q-input filled type="name" label="name" v-model="registerform.name" lazy-rules :rules="rules.name" />
                 </div>
 
                 <!-- 性別 -->
@@ -123,9 +94,9 @@
 
                 <!-- E-mail -->
                 <div class="col-5">
-                  {{registerform.email}}
-                <q-input filled v-model="registerform.email" type="email" label="E-mail">
-                </q-input>
+                  {{ registerform.email }}
+                  <q-input filled v-model="registerform.email" type="email" label="E-mail">
+                  </q-input>
                 </div>
 
                 <!-- 緊急連絡人 emergency contact -->
@@ -156,7 +127,7 @@
 
                 <!-- 確認送出 -->
                 <div class="q-gutter-md col-md-8 offset-md-0 q-mt-xl">
-                  <q-btn label="Submit" type="submit" color="primary"/>
+                  <q-btn label="Submit" type="submit" color="primary" />
                 </div>
               </q-form>
             </div>
@@ -169,30 +140,15 @@
 
             <!-- 登入 表單欄位 -->
             <div class="q-pa-xl">
-              <q-form
-              @submit.prevent='login'
-              class="q-gutter-md items-start q-py-sm"
-              >
-                <q-input
-                  filled
-                  type='text'
-                  label="account"
-                  v-model="loginform.account"
-                  lazy-rules
-                  :rules="rules.account"
-                />
+              <q-form @submit.prevent='login' class="q-gutter-md items-start q-py-sm">
+                <q-input filled type='text' label="account" v-model="loginform.account" lazy-rules
+                  :rules="rules.account" />
 
-                <q-input
-                  filled
-                  type="password"
-                  label="password"
-                  v-model="loginform.password"
-                  lazy-rules
-                  :rules="rules.password"
-                />
+                <q-input filled type="password" label="password" v-model="loginform.password" lazy-rules
+                  :rules="rules.password" />
 
                 <div class="q-gutter-md">
-                  <q-btn label="Submit" type="submit" color="primary"/>
+                  <q-btn label="Submit" type="submit" color="primary" />
                 </div>
               </q-form>
             </div>
