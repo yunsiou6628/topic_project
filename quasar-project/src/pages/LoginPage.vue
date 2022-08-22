@@ -5,7 +5,7 @@
 
 <template>
   <div class="q-pa-md q-py-xl row justify-center"
-    style="width:100vw; height: 100vh; background-image: linear-gradient(to bottom,#F4F8EE, #fff); z-index: -1;">
+    style="height: 100vh; background-image: linear-gradient(to bottom,#F4F8EE, #fff); z-index: -1;">
     <div class="q-gutter-y-md" style="width: 800px">
       <q-card>
         <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify"
@@ -19,10 +19,6 @@
         <!--  註冊 register -->
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="mails">
-            <!-- <div class="text-p">
-            * 註冊資料請確實填寫，將使用於入山入園申請、山屋申請及登山意外保險上！
-            (更改到下單時填資料)
-            </div> -->
 
             <!-- 註冊 表單欄位 -->
             <div class="q-pa-xl">
