@@ -56,7 +56,7 @@ const schema = new mongoose.Schema({
   sub: {
     type: mongoose.ObjectId,
     // required: [true, '行程小分類'],
-    ref: 'products_category.sub'
+    ref: 'products_category'
   }
 }, { versionKey: false }) // 移除 versionKey、__V
 

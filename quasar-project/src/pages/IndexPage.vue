@@ -109,10 +109,10 @@
           <q-carousel v-model="slide2" transition-prev="slide-right" transition-next="slide-left" arrows navigation
             swipeable animated infinite :autoplay="autoplay2" control-color="light-green-5 padding" height="600px">
 
-            <q-carousel-slide v-for="(product, index) in products.slice(0, parseInt(products.length / 3))" :key="index"
-              :name="index">
+            <q-carousel-slide v-for="(product, index) in products.slice(0, 3)" :key="index" :name="index">
 
-              <div class="row q-pa-xl " style="height: 510px;">
+              <div class="row q-pa-xl justify-center" style="height: 510px;">
+
                 <div class="col-4 q-pa-md" v-for="(img, idx) in [0, 1, 2]" :key="idx">
 
                   <q-card style="height: 400px;" @click="toProduct(products[index + index * 3 + idx]?._id)">
@@ -129,8 +129,8 @@
                     </div>
 
                   </q-card>
-
                 </div>
+
               </div>
             </q-carousel-slide>
           </q-carousel>
@@ -140,8 +140,7 @@
           <q-carousel v-model="slide3" transition-prev="slide-right" transition-next="slide-left" arrows navigation
             swipeable animated infinite :autoplay="autoplay3" control-color="light-green-5 padding" height="600px">
 
-            <q-carousel-slide v-for="(product, index) in products.slice(0, parseInt(products.length / 2))" :key="index"
-              :name="index">
+            <q-carousel-slide v-for="(product, index) in products.slice(0, 3)" :key="index" :name="index">
 
               <div class="row q-pa-xl " style="height: 510px;">
                 <div class="col-6 q-pa-md" v-for="(img, idx) in [0, 1]" :key="idx">

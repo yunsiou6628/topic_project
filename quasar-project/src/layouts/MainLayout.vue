@@ -3,27 +3,32 @@
     <q-header elevated class="bg-white text-teal-10">
       <q-toolbar>
 
-        <q-img src="https://i.imgur.com/DnkzPPc.png" style="height: 30px; max-width: 60px " />
+        <!-- <q-img src="https://i.imgur.com/DnkzPPc.png" style="height: 30px; max-width: 60px "
+        <q-img src="https://i.imgur.com/0U2S3Xo.png" style="height: 30px; max-width: 60px "
+          <q-img src="https://i.imgur.com/QiLmc8a.png" style="height: 30px; max-width: 60px " />
+        <q-img src="https://i.imgur.com/tIlHvlw.png" style="height: 30px; max-width: 60px " /> -->
 
         <!-- 加 q-route-tab 切換連結 跳頁 => https://quasar.dev/vue-components/tabs#introduction -->
         <!-- btn 跳頁 => <q-btn to="/Login" label="Login"/> -->
         <!-- a 連結 跳頁 => <router-link to="/Login">Login</router-link> -->
         <!-- 這裡不加 v-model="tab"，加了 v-model 就只會顯示指定的那頁，切換條不會跟著切換頁 -->
         <q-tabs class="q-py-sm">
-          <q-route-tab name="首頁" label="首頁" to="/" />
-          <q-route-tab name="登山行程" label="登山行程" to="ProductViewAll" />
-          <q-route-tab name="文章專欄" label="文章專欄" to="ArticleColumn" />
-          <q-route-tab name="關於我們" label="關於我們" to="AboutUs" />
+          <q-route-tab name="首頁" to="/">
+            <q-img src="https://i.imgur.com/0U2S3Xo.png" style="width:100px;" />
+          </q-route-tab>
+          <q-route-tab name="登山行程" label="登山行程" to="/ProductViewAll" />
+          <q-route-tab name="文章專欄" label="文章專欄" to="/ArticleColumn" />
+          <q-route-tab name="關於我們" label="關於我們" to="/AboutUs" />
         </q-tabs>
 
         <q-space />
 
         <!-- 搜尋 -->
-        <q-input borderless v-model="text" input-class="text-right">
+        <!-- <q-input borderless v-model="text" input-class="text-right">
           <template v-slot:append>
             <q-icon name="search" class="text-teal-10 q-mx-xs" />
           </template>
-        </q-input>
+        </q-input> -->
 
         <div>
           <!-- 聯絡我們 -->
@@ -88,8 +93,8 @@
       <router-view />
     </q-page-container>
 
-    <q-footer style="background:transparent; z-index: -1;">
-      <div class="col-12 relative-position">
+    <q-footer style="background:transparent;">
+      <div class=" col-12 relative-position">
         <!-- 底圖 -->
         <!-- 電腦大尺寸顯示 -->
         <img src="https://i.imgur.com/Y3YFphD.png" class="gt-md"
@@ -126,7 +131,7 @@
             </div>
           </div>
 
-          <div class="col-5 column  justify-end">
+          <div class="col-5 column justify-end">
             <div class="row justify-end content-center q-px-xl q-py-lg">
               <a href="https://page.line.me/?accountId=gohiking.today" class="q-px-sm text-white text-h5"><i
                   class="fa-brands fa-line text-white"></i></a>

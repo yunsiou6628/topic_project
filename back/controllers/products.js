@@ -4,6 +4,7 @@
 
 // import { json } from 'express'
 import products from '../models/products.js'
+import productsCategory from '../models/products_category.js'
 
 // 新增商品 (進資料庫)
 export const createProduct = async (req, res) => {
@@ -83,10 +84,12 @@ export const getProduct = async (req, res) => {
     // params 路由參數
     // patch( '/products/' + form._id )
     // 前台路徑後面的欄位( + 後面的東西) = req.params.id
-    const result = await products.findById(req.params.id).populate('sub.products_category.sub')
-    console.log(result)
-    res.status(200).send({ success: true, message: '', result })
+    const result = await products.findById(req.params.id).lean()
+    const result2 = await productsCategory.findOne({ 'sub._id': result.sub })
+    console.log(123)
+    res.status(200).send({ success: true, message: '', result: { ...result, category: result2 } })
   } catch (error) {
+    console.log(error)
     res.status(500).send({ success: false, message: '伺服器錯誤' })
   }
 }

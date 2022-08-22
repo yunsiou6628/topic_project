@@ -3,10 +3,54 @@
 <!-- B區 填表單資料(入山入園資料) -->
 <!-- C區 付款資料 -->
 <template>
-
-  <div class="q-pa-xl">
+  <!-- 大尺寸 -->
+  <div class="q-pa-xl gt-md">
     <div class="col-12">
       <q-table title="已加入行程" :rows="cart" :columns="cartcolumns" row-key="name" hide-pagination>
+        <template #body-cell-image="all">
+          <q-td :img="img">
+            <img :src="all.row.product.image" style="width:200px">
+            <!-- <pre>{{all.row.product.image}}</pre> -->
+          </q-td>
+        </template>
+
+        <template #body-cell-btn="all">
+          <q-td :btn="btn">
+            <q-btn @click="updateCart(all.rowIndex, 0)">刪除</q-btn>
+            <!-- <pre>{{all.rowIndex}}</pre> -->
+          </q-td>
+        </template>
+
+        <template #body-cell-quantity="all">
+          <q-td :btn="btn">
+            <!-- (all.rowIndex 購物車內第幾個商品 , all.row.quantity+1 該商品數量) -->
+            <q-btn @click="updateCart(all.rowIndex, all.row.quantity - 1)">-</q-btn>
+            <span class="q-px-lg">{{ all.row.quantity }}</span>
+            <q-btn @click="updateCart(all.rowIndex, all.row.quantity + 1)">+</q-btn>
+          </q-td>
+        </template>
+      </q-table>
+    </div>
+
+    <div class="col-12 text-center q-pa-xl">
+      <!-- <div class="col-12 q-py-sm">
+            <q-p class="text-h6">總金額 {{ totalPrice }}</q-p>
+          </div> -->
+
+      <!-- btn 跳頁 => <q-btn to="/"/> -->
+      <div class="col-12 q-py-sm">
+        <q-btn color='primary' to="/ConfirmOrder" label="確認"></q-btn>
+      </div>
+      <!-- <q-td :btn="btn">
+              <q-btn @click='user.checkout' :disabled='!canCheckout'>結帳</q-btn>
+            </q-td> -->
+    </div>
+  </div>
+
+  <!-- 中小尺寸 -->
+  <div class="q-pa-xl lt-lg">
+    <div class="col-12">
+      <q-table :grid="$q.screen.lt.md" title="已加入行程" :rows="cart" :columns="cartcolumns" row-key="name" hide-pagination>
         <template #body-cell-image="all">
           <q-td :img="img">
             <img :src="all.row.product.image" style="width:200px">
