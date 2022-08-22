@@ -1,29 +1,24 @@
 OrderView
 <template>
-    <div class="q-pa-xl">
-        <div class="col-12">
-          <q-table
-          title="購物清單"
-          :rows="orders"
-          :columns="orderscolumns"
-          row-key="name"
-          hide-pagination
-          >
+  <div class="q-pa-xl"
+    style="width:100vw; height: 100vh; background-image: linear-gradient(to bottom,#F4F8EE, #fff); z-index: -1;">
+    <div class="col-12">
+      <q-table title="購物清單" :rows="orders" :columns="orderscolumns" row-key="name" hide-pagination>
 
-          <template #body-cell-image="image">
+        <template #body-cell-image="image">
           <!-- <pre>{{image.row.products[0].product}}</pre> -->
-            <img :src="image.row.products[0].product.image" style="width:150px">
-          </template>
+          <img :src="image.row.products[0].product.image" style="width:150px">
+        </template>
 
-          <template #body-cell-product_date="product_date">
+        <template #body-cell-product_date="product_date">
           <!-- <pre>{{product_date.row.products[0].product}}</pre> -->
           <!-- <pre>{{product_date.row.products[0].product.product_date}}</pre> -->
-          {{new Date(product_date.row.products[0].product.product_date).toLocaleDateString()}}
-          </template>
+          {{ new Date(product_date.row.products[0].product.product_date).toLocaleDateString() }}
+        </template>
 
-        </q-table>
-      </div>
+      </q-table>
     </div>
+  </div>
 </template>
 
 <script setup>

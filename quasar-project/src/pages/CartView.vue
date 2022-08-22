@@ -4,7 +4,8 @@
 <!-- C區 付款資料 -->
 <template>
   <!-- 大尺寸 -->
-  <div class="q-pa-xl gt-md">
+  <div class="q-pa-xl gt-md"
+    style="width:100vw; height: 100vh; background-image: linear-gradient(to bottom,#F4F8EE, #fff); z-index: -1;">
     <div class="col-12">
       <q-table title="已加入行程" :rows="cart" :columns="cartcolumns" row-key="name" hide-pagination>
         <template #body-cell-image="all">

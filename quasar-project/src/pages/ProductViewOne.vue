@@ -5,15 +5,15 @@
     <q-breadcrumbs class="text-teal-9" active-color="light-green-4">
       <q-breadcrumbs-el label="登山行程" />
       <!-- 大分類 -->
-      <!-- <q-breadcrumbs-el>
+      <q-breadcrumbs-el>
         大分類 -
         <pre>{{ product }}</pre>
-      </q-breadcrumbs-el> -->
+      </q-breadcrumbs-el>
       <!-- 小分類 -->
-      <!-- <q-breadcrumbs-el>
+      <q-breadcrumbs-el>
         小分類 -
         <pre>{{ product }}</pre>
-      </q-breadcrumbs-el> -->
+      </q-breadcrumbs-el>
     </q-breadcrumbs>
   </div>
 

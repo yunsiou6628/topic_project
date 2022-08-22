@@ -4,7 +4,8 @@
 <!-- https://quasar.dev/vue-components/input -->
 
 <template>
-  <div class="q-pa-md q-py-xl row justify-center">
+  <div class="q-pa-md q-py-xl row justify-center"
+    style="width:100vw; height: 100vh; background-image: linear-gradient(to bottom,#F4F8EE, #fff); z-index: -1;">
     <div class="q-gutter-y-md" style="width: 800px">
       <q-card>
         <q-tabs v-model="tab" dense class="text-grey" active-color="primary" indicator-color="primary" align="justify"
