@@ -1,6 +1,6 @@
 <!-- ContactUs -->
 <template>
-  <div class="row justify-center q-px-xxl q-py-lg contactus-mb"
+  <div class="row justify-center q-px-xxl q-py-lg"
     style="height: 100vh; color: #5E8A4B; background-image: linear-gradient(to bottom,#F4F8EE, #fff); z-index: -1;">
 
     <div class="col-12">
@@ -18,36 +18,38 @@
           <div class="col-12 col-lg-5 q-pt-sm q-px-md">
             <!-- 抓資料要加 v-model='form' -->
             <!-- 範例 q-input outlined v-model="text" label="Outlined" -->
-            <q-input outlined label='姓名' :rules='[rules.required]'></q-input>
+            <q-input outlined bg-color="white" label='姓名' :rules='[rules.required]'></q-input>
           </div>
 
           <div class="col-12 col-lg-5 q-pt-sm q-px-md">
             <!-- 抓資料要加 v-model='form' -->
-            <q-input outlined label='電話' :rules='[rules.required]'></q-input>
+            <q-input outlined bg-color="white" label='電話' :rules='[rules.required]'></q-input>
           </div>
         </div>
 
         <div class="row justify-center">
           <div class="col-12 col-lg-5 q-pt-sm q-px-md">
             <!-- 抓資料要加 v-model='form' -->
-            <q-input outlined label='email' :rules='[rules.required]'></q-input>
+            <q-input outlined bg-color="white" label='email' :rules='[rules.required]'></q-input>
           </div>
 
           <div class="col-12 col-lg-5 q-pt-sm q-px-md">
-            <q-select outlined v-model="model" :options="options" label="選擇詢問項目" :rules='[rules.required]' />
+            <q-select outlined bg-color="white" v-model="model" :options="options" label="選擇詢問項目"
+              :rules='[rules.required]' />
           </div>
         </div>
 
         <div class="row justify-center">
           <div class="col-12 col-lg-10 q-pt-sm q-px-md">
-            <q-input v-model="textareaModel" outlined clearable type="textarea" label="請輸入您的需求"
-              :shadow-text="textareaShadowText" @keydown="processTextareaFill" @focus="processTextareaFill" />
+            <q-input v-model="textareaModel" outlined bg-color="white" clearable type="textarea" label="請輸入您的需求"
+              :rules='[rules.required]' :shadow-text="textareaShadowText" @keydown="processTextareaFill"
+              @focus="processTextareaFill" />
           </div>
         </div>
 
         <!-- 確認送出 -->
-        <div class="q-gutter-md col-md-8 offset-md-0 row justify-center ">
-          <q-btn label="送出" type="submit" class="col-3" style=" background: #5E8A4B; color: #fff;" />
+        <div class="q-gutter-md col-md-8 offset-md-0 row justify-center q-pt-lg-xl">
+          <q-btn label="送出" type="submit" class="col-4 col-lg-3" style=" background: #5E8A4B; color: #fff;" />
         </div>
 
       </q-form>

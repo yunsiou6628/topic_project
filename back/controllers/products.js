@@ -86,8 +86,8 @@ export const getProduct = async (req, res) => {
     // 前台路徑後面的欄位( + 後面的東西) = req.params.id
     const result = await products.findById(req.params.id).lean()
     const result2 = await productsCategory.findOne({ 'sub._id': result.sub })
-    console.log(123)
     res.status(200).send({ success: true, message: '', result: { ...result, category: result2 } })
+    // category: result2 資料欄位放到 => product.category = data.result.category
   } catch (error) {
     console.log(error)
     res.status(500).send({ success: false, message: '伺服器錯誤' })
